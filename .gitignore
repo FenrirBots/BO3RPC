@@ -1,3 +1,4 @@
 Build/discord-rpc.lib
 .vs/*
 Build/Bin/*
+Build/GetMSBuild.bat
