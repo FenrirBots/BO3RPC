@@ -33,7 +33,7 @@ if ["%1"]==[""] (
 )
 
 call %BuildTools64%
-call cl.exe /nologo /c /W4 /O2 /MD /D_USRDLL /D_WINDLL /D_NDEBUG /Fo"Bin\Intermediate\\" /I"../Source" /TP "..\Source\Main.cpp" "..\Source\LeoHook\LeoHook.cpp" "..\Source\Discord\Discord.cpp"
+call cl.exe /nologo /c /W4 /O2 /MD /D_USRDLL /D_WINDLL /D_NDEBUG /Fo"Bin\Intermediate\\" /I"../Source" /TP "..\Source\Main.cpp" "..\Source\LeoHook\LeoHook.cpp" "..\Source\Discord\Discord.cpp" "..\Source\Loop.cpp" "..\Source\Engine\Cg.cpp" "..\Source\Engine\Com.cpp" "..\Source\Engine\Dvar.cpp" "..\Source\Engine\LobbySession.cpp"
 call link.exe /nologo /dll /subsystem:windows /out:"Bin\RichPresence.dll" "Bin\Intermediate\*.obj" discord_rpc.lib "kernel32.lib" "user32.lib" "gdi32.lib" "winspool.lib" "comdlg32.lib" "advapi32.lib" "shell32.lib" "ole32.lib" "oleaut32.lib" "uuid.lib" "odbc32.lib" "odbccp32.lib" 
 
 if ["%ERRORLEVEL%"] NEQ ["0"] (
