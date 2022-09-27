@@ -1,15 +1,34 @@
 #include "discord/discord.h"
 
+#define APPLICATION_ID "1023037909848297522"
+
+std::atomic<bool> Discord::Clear = false;
+std::atomic<bool> Discord::Update = false;
+std::atomic<bool> Discord::Running = true;
+MultiThreadedPresence Discord::RichPresence = { };
+
 DWORD WINAPI Discord::Loop(LPVOID /*lpvReserved*/)
 {
-	DiscordEventHandlers pEventHandlers;
-	ZeroMemory(&pEventHandlers, sizeof DiscordEventHandlers);
-	Discord_Initialize("1023037909848297522", &pEventHandlers, 0, 0);
+	DiscordEventHandlers EventHandlers;
+	Discord_Initialize(APPLICATION_ID, &EventHandlers, 0, 0);
 
-	static bool bRunning = true;
-	while (bRunning)
+	// Having a boolean here is useless as of now as we cannot detach from the target process without breaking the game.
+	while (Discord::Running)
 	{
-		// Do not call engine functions here...
+		if (Discord::Clear)
+		{
+			Discord::Clear = false;
+			Discord_ClearPresence();
+		}
+
+		else if (Discord::Update)
+		{
+
+			// Do not call engine functions here...
+
+			// This is really expensive performance wise to update, so there has to be alot of checks before we do update.
+			Discord_UpdatePresence(&Discord::RichPresence.Presence);
+		}
 	}
 
 	Discord_Shutdown();
