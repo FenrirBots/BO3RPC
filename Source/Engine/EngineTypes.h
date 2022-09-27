@@ -1,4 +1,5 @@
 #pragma once
+#include <Windows.h>
 
 typedef unsigned long long uint64;
 

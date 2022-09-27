@@ -3,5 +3,5 @@
 
 namespace LobbySession
 {
-	auto GetMaxClients = GetAddress<uint64(__cdecl*)(unsigned int localClientNumber /* This could be wrong... */)>(0x7FF7737E8CB0);
+	extern int(__cdecl* GetMaxClients)(unsigned int);
 }
