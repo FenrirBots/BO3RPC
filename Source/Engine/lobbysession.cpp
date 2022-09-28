@@ -11,4 +11,4 @@ int(__fastcall* LobbySession::GetClientCount)(unsigned int, unsigned int) = [](u
 	}
 
 	return count;
-}
+};
