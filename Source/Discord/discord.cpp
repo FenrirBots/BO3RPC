@@ -28,6 +28,7 @@ DWORD WINAPI Discord::Loop(LPVOID /*lpvReserved*/)
 
 			// This is really expensive performance wise to update, so there has to be alot of checks before we do update.
 			Discord_UpdatePresence(&Discord::RichPresence.Presence);
+			Discord::Update = false;
 		}
 	}
 
