@@ -1,6 +1,7 @@
 #pragma once
 #include "Engine/CG.h"
 #include "Engine/Com.h"
+#include "Engine/DDL.h"
 #include "Engine/Dvar.h"
 #include "Engine/LobbySession.h"
 
