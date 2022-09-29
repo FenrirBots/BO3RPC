@@ -14,3 +14,4 @@ Source/old.cpp
 *.ipch
 *.ipch
 Source/.vs/Source/v17/.suo
+Source/.vs/Source/config/applicationhost.config
