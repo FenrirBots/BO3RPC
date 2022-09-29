@@ -10,3 +10,7 @@ Build/GetMSBuild.bat
 *.vsidx
 *.sqlite
 Source/.vs/ProjectSettings.json
+Source/old.cpp
+*.ipch
+*.ipch
+Source/.vs/Source/v17/.suo
