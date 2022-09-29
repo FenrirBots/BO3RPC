@@ -38,73 +38,75 @@ DWORD WINAPI Discord::Loop(LPVOID /*lpvReserved*/)
 	return 1;
 }
 
-
-size_t find(std::string string, const char* szstring)
+std::string lower(std::string input)
 {
-	std::string::iterator pos = std::search(string.begin(), string.end(), std::string(szstring).begin(), std::string(szstring).end(), [](char ch1, char ch2) { return std::toupper(ch1) == std::toupper(ch2); });
-	if (pos != string.end())
-		return std::abs(std::distance(string.begin(), pos));
-	return 0;
+	std::string output;
+	std::transform(input.begin(), input.end(), back_inserter(output), ::tolower);
+	return output;
 }
 
-const char* Discord::ParseString(std::string data)
+size_t find(std::string input, std::string target)
 {
-	std::string string(data);
+	std::string n = lower(input);
+	std::string t = lower(target);
+	size_t position = n.find(t);
+
+	if (position == std::string::npos)
+	{
+		return 0;
+	}
+
+	return position;
+}
+
+std::string replace(size_t position, size_t length, std::string input, std::string replacement)
+{
+	std::string output(input);
+
+	output.replace(output.begin() + position, output.begin() + position + length, replacement);
+
+	return output;
+}
+
+std::string Discord::ParseString(std::string input)
+{
+	std::string output(input);
 
 	while (true)
 	{
-		size_t pos = 0;
-		
-		pos = find(string, "${CurrentRound}");
-		if (pos > 0)
+		size_t position = 0;
+
+		position = find(input, "${currentround}");
+		if (position > 0)
 		{
 			uint64 DDLState = 0;
+			static size_t length = std::string("${currentround}").length();
+
 			if (DDL::MoveToName(&*GetAddress<uint64*>(0x7FF774C3F680), &DDLState, "numZombieRounds"))
 			{
 				auto CurrentRound = DDL::GetUInt(&DDLState, &*GetAddress<uint64*>(0x7FF77B506A20)) + 1;
-				string.replace(pos, std::string("${CurrentRound}").length(), std::to_string(CurrentRound));
+				output = replace(position, length, output, std::to_string(CurrentRound));
 			}
 			else
 			{
-				string.replace(pos, std::string("${CurrentRound}").length(), "0");
+				output = replace(position, length, output, "0");
 			}
 
 			continue;
 		}
 
-		pos = find(string, "${ZombiesKilled");
-		if (pos > 0)
+		position = find(input, "${currentround}");
+		if (position > 0)
 		{
-			string.replace(pos, std::string("${Deaths}").length(), "0");
-			continue;
-		}
-		
-		pos = find(string, "${Downs}");
-		if (pos > 0)
-		{
-			string.replace(pos, std::string("${Deaths}").length(), "0");
+			static size_t length = std::string("${currentround}").length();
+			output = replace(position, length, output, GetAddress<const char*>(0x7FF78AD517A2));
 			continue;
 		}
 
-		pos = find(string, "${Deaths}");
-		if (pos > 0)
-		{
-			string.replace(pos, std::string("${Deaths}").length(), "0");
-			continue;
-		}
-		
-		pos = find(string, "${MapName}");
-		if (pos > 0)
-		{
-			string.replace(pos, std::string("${MapName}").length(), (const char*)((uint64)GetModuleHandle(0) + 0x194417A2));
-			continue;
-		}
-
-		// If we dont find anything, exit the loop.
 		break;
 	}
 
-	return string.c_str();
+	return output;
 }
 
 void Discord::UpdatePresence()
@@ -116,6 +118,10 @@ void Discord::UpdatePresence()
 		
 		if (Com::IsInGame())
 		{
+			if (Discord::RichPresence.Presence.startTimestamp == 0)
+			{
+				Discord::RichPresence.Presence.startTimestamp = time(0);
+			}
 
 			switch (LobbyMode)
 			{
@@ -125,16 +131,22 @@ void Discord::UpdatePresence()
 					std::string details;
 					std::string state;
 
-					if (LobbySession::GetClientCount(1, 0) <= 1)
+					try
 					{
-						state = Config::m_Config["Zombies"]["Presence"]["state"]["0-1"].get<std::string>();
-					}
-					else
-					{
-						state = Config::m_Config["Zombies"]["Presence"]["state"]["2-4"].get<std::string>();
-					}
+						if (LobbySession::GetClientCount(1, 0) <= 1)
+						{
+							details = Config::m_Config["Zombies"]["presence"]["details"]["0-1"]["ingame-public"].get<std::string>();
+							state = Config::m_Config["Zombies"]["presence"]["state"]["0-1"]["ingame-public"].get<std::string>();
+						}
+						else
+						{
+							details = Config::m_Config["Zombies"]["presence"]["details"]["2-4"]["ingame-public"].get<std::string>();
+							state = Config::m_Config["Zombies"]["presence"]["state"]["2-4"]["ingame-public"].get<std::string>();
+						}
 
-					Discord::RichPresence.Presence.state = Discord::ParseString(state);
+						Discord::RichPresence.Presence.state = Discord::ParseString(state).c_str();
+						Discord::RichPresence.Presence.details = Discord::ParseString(details).c_str();
+					} catch (nlohmann::json::exception e) { OutputDebugStringA(e.what()); }
 				}
 				else if (Com::SessionMode::IsMode(1))
 				{
@@ -148,7 +160,25 @@ void Discord::UpdatePresence()
 			case 1:
 				if (Com::SessionMode::IsMode(0))
 				{
+					std::string details;
+					std::string state;
 
+					try
+					{
+						if (LobbySession::GetClientCount(1, 0) <= 1)
+						{
+							details = Config::m_Config["Zombies"]["presence"]["details"]["0-1"]["ingame-customs"].get<std::string>();
+							state = Config::m_Config["Zombies"]["presence"]["state"]["0-1"]["ingame-customs"].get<std::string>();
+						}
+						else
+						{
+							details = Config::m_Config["Zombies"]["presence"]["details"]["2-4"]["ingame-customs"].get<std::string>();
+							state = Config::m_Config["Zombies"]["presence"]["state"]["2-4"]["ingame-customs"].get<std::string>();
+						}
+
+						Discord::RichPresence.Presence.state = Discord::ParseString(state).c_str();
+						Discord::RichPresence.Presence.details = Discord::ParseString(details).c_str();
+					} catch (nlohmann::json::exception e) { OutputDebugStringA(e.what()); }
 				}
 				else if (Com::SessionMode::IsMode(1))
 				{
