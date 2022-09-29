@@ -39,21 +39,21 @@ DWORD WINAPI Discord::Loop(LPVOID /*lpvReserved*/)
 }
 
 
-int find(std::string string, const char* szstring)
+size_t find(std::string string, const char* szstring)
 {
 	std::string::iterator pos = std::search(string.begin(), string.end(), std::string(szstring).begin(), std::string(szstring).end(), [](char ch1, char ch2) { return std::toupper(ch1) == std::toupper(ch2); });
-	if (fpos != string.end())
-		return std::distance(text.beign(), pos);
+	if (pos != string.end())
+		return std::abs(std::distance(string.begin(), pos));
 	return 0;
 }
 
-const char* ParseString(const char* data)
+const char* Discord::ParseString(std::string data)
 {
 	std::string string(data);
 
 	while (true)
 	{
-		int pos = 0;
+		size_t pos = 0;
 		
 		pos = find(string, "${CurrentRound}");
 		if (pos > 0)
@@ -61,7 +61,7 @@ const char* ParseString(const char* data)
 			uint64 DDLState = 0;
 			if (DDL::MoveToName(&*GetAddress<uint64*>(0x7FF774C3F680), &DDLState, "numZombieRounds"))
 			{
-				auto CurrentRound = DDL::GetUInt(&DDLState, &*GetAddress<uint64*>(0x7FF77B506A20)) + 1);
+				auto CurrentRound = DDL::GetUInt(&DDLState, &*GetAddress<uint64*>(0x7FF77B506A20)) + 1;
 				string.replace(pos, std::string("${CurrentRound}").length(), std::to_string(CurrentRound));
 			}
 			else
@@ -86,7 +86,7 @@ const char* ParseString(const char* data)
 			continue;
 		}
 
-		`pos = find(string, "${Deaths}");
+		pos = find(string, "${Deaths}");
 		if (pos > 0)
 		{
 			string.replace(pos, std::string("${Deaths}").length(), "0");
@@ -127,11 +127,11 @@ void Discord::UpdatePresence()
 
 					if (LobbySession::GetClientCount(1, 0) <= 1)
 					{
-						state = Config::Config["Zombies"]["Presence"]["State"]["2-4"];
+						state = Config::m_Config["Zombies"]["Presence"]["state"]["0-1"].get<std::string>();
 					}
 					else
 					{
-						state = Config::Config["Zombies"]["Presence"]["State"]["2-4"];
+						state = Config::m_Config["Zombies"]["Presence"]["state"]["2-4"].get<std::string>();
 					}
 
 					Discord::RichPresence.Presence.state = Discord::ParseString(state);
@@ -176,6 +176,7 @@ void Discord::UpdatePresence()
 				// Freerun
 				break;
 			default:
+				break;
 			}
 		}
 		else
@@ -184,5 +185,6 @@ void Discord::UpdatePresence()
 		}
 
 		Discord::RichPresence.unlock();
+		Discord::Update = true;
 	}
 }

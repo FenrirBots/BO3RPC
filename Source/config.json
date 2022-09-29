@@ -36,24 +36,24 @@
   },
 
   "Zombies": {
-    "state": {
-      "theater": "",
-      "players": {
-        "0-1": {
-          "lobby": "In the Main Menu",
-          "ingame-public": "Playing Solo",
-          "ingame-customs": "Playing Solo"
-        },
-        "2-4": {
-          "lobby": "In the Main Menu",
-          "ingame-public": "In a Party",
-          "ingame-customs": "In a Party"
+    "Presence": {
+      "state": {
+        "theater": "",
+        "players": {
+          "0-1": {
+            "lobby": "In the Main Menu",
+            "ingame-public": "Playing Solo",
+            "ingame-customs": "Playing Solo"
+          },
+          "2-4": {
+            "lobby": "In the Main Menu",
+            "ingame-public": "In a Party",
+            "ingame-customs": "In a Party"
+          }
         }
-      }
-    },
-    "description": {
-      "theater": "",
-      "players": {
+      },
+      "details": {
+        "theater": "",
         "0-1": {
           "lobby": "",
           "ingame-public": "${CurrentMap}: Round ${Round}",

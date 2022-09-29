@@ -15,6 +15,7 @@ namespace Discord
 {
 	DWORD WINAPI Loop(LPVOID);
 	void UpdatePresence();
+	const char* ParseString(std::string);
 
 	extern MultiThreadedPresence RichPresence;
 	extern std::atomic<bool> Clear;
