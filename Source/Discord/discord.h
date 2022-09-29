@@ -15,8 +15,13 @@ namespace discord
 {
 	DWORD WINAPI thread(LPVOID);
 
+	extern std::atomic<bool> update;
+	extern std::atomic<bool> running;
+
 	namespace presence
 	{
+		extern MultiThreadedPresence data;
+
 		void initialize(const char* applicationId, DiscordEventHandlers* handlers, int autoRegister, const char* optionalSteamId)
 		{
 			Discord_Initialize(applicationId, handlers, autoRegister, optionalSteamId);
@@ -29,7 +34,7 @@ namespace discord
 
 		void update(DiscordRichPresence* presence)
 		{
-			Discord_UpdatePresence(&presence);
+			Discord_UpdatePresence(presence);
 		}
 
 		void clear()
@@ -39,17 +44,12 @@ namespace discord
 
 		void set(DiscordRichPresence presence)
 		{
-			if (discord::presence::update == false) {
+			if (discord::update.load() == false) {
 				discord::presence::data.lock();
 				discord::presence::data.presence = presence;
 				discord::presence::data.unlock();
-				discord::presence::update = true;
+				discord::update.store(true);
 			}
 		}
-	
-		extern std::atomic<bool> update;
-		extern MultiThreadedPresence data;
 	}
-
-	extern std::atomic<bool> running;
 }

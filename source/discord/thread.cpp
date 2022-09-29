@@ -2,7 +2,7 @@
 #define APPLICATION_ID "1023037909848297522"
 
 std::atomic<bool> discord::running = true;
-std::atomic<bool> discord::presence::update = false;
+std::atomic<bool> discord::update = false;
 MultiThreadedPresence discord::presence::data;
 
 
@@ -18,14 +18,15 @@ DWORD WINAPI discord::thread(LPVOID /* lpvReserved */)
 
 	while (discord::running)
 	{
-		if (discord::presence::update == false)
+		if (discord::update.load() == false)
 		{
 			continue;
 		}
 
 		discord::presence::update(&discord::presence::data.presence);
-		discord::presence::update = false;
+		discord::update.store(false);
 	}
 
 	discord::presence::shutdown();
+	return TRUE;
 }

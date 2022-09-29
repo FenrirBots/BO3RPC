@@ -1,6 +1,8 @@
 #pragma once
+#include <algorithm>
 #include <string>
 #include <vector>
+#include "json/json.hpp"
 
 
 struct rule_t
@@ -13,7 +15,7 @@ struct rule_t
 std::string lower(std::string input)
 {
 	std::string output;
-	std::transform(input.begin(), input.end(), back_inserter(output), ::tolower);
+	std::transform(input.begin(), input.end(), back_inserter(output), (char(__cdecl*)(int c))::tolower);
 	return output;
 }
 
@@ -22,11 +24,6 @@ size_t find(std::string input, std::string target)
 	std::string n = lower(input);
 	std::string t = lower(target);
 	size_t position = n.find(t);
-
-	if (position == std::string::npos)
-	{
-		return -1;
-	}
 
 	return position;
 }
@@ -52,12 +49,12 @@ namespace parser
 		{
 			bool parsed = false;
 
-			for (int rule = 0; rule < config::parser::rules.size(); rule++)
+			for (int rule = 0; rule < parser::rules.size(); rule++)
 			{
-				size_t position = find(output, config::parser::rules[rule].content);
-				if (position != -1)
+				size_t position = find(output, parser::rules[rule].content);
+				if (position != std::string::npos)
 				{
-					output = replace(position, config::parser::rules[rule].length, output, config::parser::rules[rule].callback());
+					output = replace(position, parser::rules[rule].length, output, parser::rules[rule].callback());
 					parsed = true;
 				}
 
@@ -76,6 +73,6 @@ namespace parser
 
 	void addrule(std::string content, std::string(*callback)())
 	{
-		config::parser::rules.push_back(rule_t{ content, content.length(), callback });
+		parser::rules.push_back(rule_t{ content, content.length(), callback });
 	}
 }
