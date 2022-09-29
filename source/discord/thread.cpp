@@ -8,13 +8,7 @@ MultiThreadedPresence discord::presence::data;
 
 DWORD WINAPI discord::thread(LPVOID /* lpvReserved */)
 {
-	ZeroMemory(&discord::presence::data.presence, sizeof(DiscordRichPresence));
-
-	DiscordEventHandlers EventHandlers;
-	ZeroMemory(&EventHandlers, sizeof(DiscordEventHandlers));
-
-
-	discord::presence::initialize("", &EventHandlers, 0, 0);
+	discord::presence::initialize(APPLICATION_ID, 0, 0);
 
 	while (discord::running)
 	{

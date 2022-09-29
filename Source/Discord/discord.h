@@ -22,34 +22,10 @@ namespace discord
 	{
 		extern MultiThreadedPresence data;
 
-		void initialize(const char* applicationId, DiscordEventHandlers* handlers, int autoRegister, const char* optionalSteamId)
-		{
-			Discord_Initialize(applicationId, handlers, autoRegister, optionalSteamId);
-		}
-
-		void shutdown()
-		{
-			Discord_Shutdown();
-		}
-
-		void update(DiscordRichPresence* presence)
-		{
-			Discord_UpdatePresence(presence);
-		}
-
-		void clear()
-		{
-			Discord_ClearPresence();
-		}
-
-		void set(DiscordRichPresence presence)
-		{
-			if (discord::update.load() == false) {
-				discord::presence::data.lock();
-				discord::presence::data.presence = presence;
-				discord::presence::data.unlock();
-				discord::update.store(true);
-			}
-		}
+		void initialize(const char* applicationId, DiscordEventHandlers* handlers, int autoRegister, const char* optionalSteamId);
+		void shutdown();
+		void update(DiscordRichPresence* presence);
+		void clear();
+		void set(DiscordRichPresence presence);
 	}
 }
