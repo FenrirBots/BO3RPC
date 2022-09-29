@@ -1,0 +1,70 @@
+{
+  "Campaign": {
+  },
+
+  "Multiplayer": {
+    "state": {
+      "theater": "",
+      "players": {
+        "0-1": {
+          "lobby": "In the Main Menu",
+          "ingame-public": "Playing Solo",
+          "ingame-customs": "Playing Solo"
+        },
+        "2-4": {
+          "lobby": "In the Main Menu",
+          "ingame-public": "In a Party",
+          "ingame-customs": "In a Party"
+        }
+      }
+    },
+    "description": {
+      "theater": "",
+      "players": {
+        "0-1": {
+          "lobby": "",
+          "ingame-public": "${CurrentMap}: ${Kills}/${Deaths}",
+          "ingame-customs": "${CurrentMap}: ${Kills}/${Deaths}"
+        },
+        "2-4": {
+          "lobby": "",
+          "ingame-public": "${CurrentMap}: ${Kills}/${Deaths}",
+          "ingame-customs": "${CurrentMap}: ${Kills}/${Deaths}"
+        }
+      }
+    }
+  },
+
+  "Zombies": {
+    "state": {
+      "theater": "",
+      "players": {
+        "0-1": {
+          "lobby": "In the Main Menu",
+          "ingame-public": "Playing Solo",
+          "ingame-customs": "Playing Solo"
+        },
+        "2-4": {
+          "lobby": "In the Main Menu",
+          "ingame-public": "In a Party",
+          "ingame-customs": "In a Party"
+        }
+      }
+    },
+    "description": {
+      "theater": "",
+      "players": {
+        "0-1": {
+          "lobby": "",
+          "ingame-public": "${CurrentMap}: Round ${Round}",
+          "ingame-customs": "${CurrentMap}: Round ${Round}"
+        },
+        "2-4": {
+          "lobby": "",
+          "ingame-public": "${CurrentMap}: Round ${Round}",
+          "ingame-customs": "${CurrentMap}: Round ${Round}"
+        }
+      }
+    }
+  }
+}
