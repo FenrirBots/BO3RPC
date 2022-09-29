@@ -2,3 +2,11 @@ Build/discord-rpc.lib
 .vs/*
 Build/Bin/*
 Build/GetMSBuild.bat
+*.opendb
+*.db-wal
+*.db-shm
+*.db
+*.lock
+*.vsidx
+*.sqlite
+Source/.vs/ProjectSettings.json
