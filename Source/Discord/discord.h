@@ -8,17 +8,48 @@
 
 struct MultiThreadedPresence : public std::mutex
 {
-	DiscordRichPresence Presence;
+	DiscordRichPresence presence;
 };
 
-namespace Discord
+namespace discord
 {
-	DWORD WINAPI Loop(LPVOID);
-	void UpdatePresence();
-	std::string ParseString(std::string);
+	DWORD WINAPI thread(LPVOID);
 
-	extern MultiThreadedPresence RichPresence;
-	extern std::atomic<bool> Clear;
-	extern std::atomic<bool> Update;
-	extern std::atomic<bool> Running;
+	namespace presence
+	{
+		void initialize(const char* applicationId, DiscordEventHandlers* handlers, int autoRegister, const char* optionalSteamId)
+		{
+			Discord_Initialize(applicationId, handlers, autoRegister, optionalSteamId);
+		}
+
+		void shutdown()
+		{
+			Discord_Shutdown();
+		}
+
+		void update(DiscordRichPresence* presence)
+		{
+			Discord_UpdatePresence(&presence);
+		}
+
+		void clear()
+		{
+			Discord_ClearPresence();
+		}
+
+		void set(DiscordRichPresence presence)
+		{
+			if (discord::presence::update == false) {
+				discord::presence::data.lock();
+				discord::presence::data.presence = presence;
+				discord::presence::data.unlock();
+				discord::presence::update = true;
+			}
+		}
+	
+		extern std::atomic<bool> update;
+		extern MultiThreadedPresence data;
+	}
+
+	extern std::atomic<bool> running;
 }
