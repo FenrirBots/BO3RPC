@@ -1,4 +1,6 @@
 #include "discord/discord.h"
+#include "engine/engine.h"
+#include "config.h"
 
 #define APPLICATION_ID "1023037909848297522"
 
@@ -34,4 +36,16 @@ DWORD WINAPI Discord::Loop(LPVOID /*lpvReserved*/)
 
 	Discord_Shutdown();
 	return 1;
+}
+
+void Discord::UpdatePresence()
+{
+	if (!Discord::Update)
+	{
+		Discord::RichPresence.lock();
+		auto LobbyMode = *(int*)(LobbySession::GetSession(1) + 0x8);
+		
+
+		Discord::RichPresence.unlock();
+	}
 }

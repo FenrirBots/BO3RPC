@@ -14,6 +14,7 @@ struct MultiThreadedPresence : public std::mutex
 namespace Discord
 {
 	DWORD WINAPI Loop(LPVOID);
+	void UpdatePresence();
 
 	extern MultiThreadedPresence RichPresence;
 	extern std::atomic<bool> Clear;
