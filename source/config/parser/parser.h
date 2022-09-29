@@ -4,6 +4,8 @@
 #include <vector>
 #include "json/json.hpp"
 
+// note: Alot of this will probably have to go to a c++ file
+
 
 struct rule_t
 {
