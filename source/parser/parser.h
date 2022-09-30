@@ -63,7 +63,6 @@ namespace parser
 				break;
 			}
 
-			// If nothing has been parsed
 			if (parsed == false)
 			{
 				break;
