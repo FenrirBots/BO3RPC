@@ -1,14 +1,17 @@
 #include "config/config.h"
 
 
-nlohmann::json config::data;
-
-void config::load()
+namespace config
 {
+    void load()
+    {
 
-}
+    }
 
-void config::save()
-{
+    void save()
+    {
 
+    }
+
+    nlohmann::json data;
 }

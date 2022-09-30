@@ -1,5 +1,5 @@
 #pragma once
-#include "config/parser/parser.h"
+#include "parser/parser.h"
 
 
 namespace config
