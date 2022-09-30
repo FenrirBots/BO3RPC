@@ -22,10 +22,11 @@ namespace discord
 	{
 		extern MultiThreadedPresence data;
 
-		void initialize(const char* applicationId, DiscordEventHandlers* handlers, int autoRegister, const char* optionalSteamId);
-		void shutdown();
+		void initialize(const char* applicationId, int autoRegister, const char* optionalSteamId);
+		DiscordRichPresence get();
+		void set(DiscordRichPresence presence);
 		void update(DiscordRichPresence* presence);
 		void clear();
-		void set(DiscordRichPresence presence);
+		void shutdown();
 	}
 }
