@@ -1,6 +1,9 @@
 #include <Windows.h>
 #include "parser/parser.h"
 
+// The amount of times the loop can run before it assumes its in an infinite loop and exits.
+#define PARSER_ABORTCOUNT 30
+
 
 std::string lower(std::string input)
 {
@@ -36,6 +39,8 @@ namespace parser
 	{
 		std::string output(input);
 
+		int count = 0;
+
 		while (true)
 		{
 			bool parsed = false;
@@ -54,6 +59,14 @@ namespace parser
 			{
 				break;
 			}
+
+			// Safeguard against infinite loops
+			if(count > PARSER_ABORTCOUNT)
+			{
+				break;
+			}
+
+			count++;
 		}
 
 		if(removeinvalid)
