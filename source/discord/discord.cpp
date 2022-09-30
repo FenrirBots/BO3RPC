@@ -3,7 +3,7 @@
 namespace discord
 {
 	std::atomic<bool> update;
-	std::atomic<bool> running;
+	std::atomic<bool> running = true;
 
 	namespace presence
 	{
