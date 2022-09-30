@@ -18,12 +18,23 @@ namespace discord
 			ZeroMemory(&discord::presence::data.presence, sizeof(DiscordRichPresence));
 			discord::presence::data.unlock();
 
-			Discord_Initialize(applicationId, EventHandlers, autoRegister, optionalSteamId);
+			Discord_Initialize(applicationId, &EventHandlers, autoRegister, optionalSteamId);
 		}
 
-		void shutdown()
+		DiscordRichPresence get()
 		{
-			Discord_Shutdown();
+			// Not sure if this is thread safe
+			return discord::presence::data.presence;
+		}
+
+		void set(DiscordRichPresence presence)
+		{
+			if (discord::update.load() == false) {
+				discord::presence::data.lock();
+				discord::presence::data.presence = presence;
+				discord::presence::data.unlock();
+				discord::update.store(true);
+			}
 		}
 
 		void update(DiscordRichPresence* presence)
@@ -36,14 +47,9 @@ namespace discord
 			Discord_ClearPresence();
 		}
 
-		void set(DiscordRichPresence presence)
+		void shutdown()
 		{
-			if (discord::update.load() == false) {
-				discord::presence::data.lock();
-				discord::presence::data.presence = presence;
-				discord::presence::data.unlock();
-				discord::update.store(true);
-			}
+			Discord_Shutdown();
 		}
 	}
 }
