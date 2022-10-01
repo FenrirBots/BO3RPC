@@ -5,8 +5,8 @@
         {
             "multiplayer":
             {
-                "state": "",
-                "details": ""
+                "state": "MP Test",
+                "details": "MP Test"
             },
 
             "zombies":

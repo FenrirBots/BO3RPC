@@ -55,6 +55,7 @@ namespace parser
 				}
 			}
 
+			// If nothing has been parsed we can safely break
 			if (parsed == false)
 			{
 				break;
