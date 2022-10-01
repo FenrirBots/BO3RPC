@@ -1,0 +1,52 @@
+{
+    "lobby_mode":
+    {
+        "public":
+        {
+            "multiplayer":
+            {
+                "state": "",
+                "details": ""
+            },
+
+            "zombies":
+            {
+                "solo":
+                {
+                    "state": "Playing Solo",
+                    "details": "Round ${round} on ${mapname}"
+                },
+
+                "party":
+                {
+                    "state": "In a Party",
+                    "details": "Round ${round} on ${mapname}"
+                }
+            },
+
+            "campaign":
+            {
+                "state": "",
+                "details": ""
+            }
+        },
+        
+        "theater":
+        {
+            "state":"In Theater Mode",
+            "details": "Watching ${videoname}"
+        },
+        
+        "arena":
+        {
+            "state": "",
+            "details": ""
+        },
+        
+        "freerun":
+        {
+            "state": "",
+            "details": ""           
+        }
+    }
+}
