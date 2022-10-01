@@ -4,8 +4,8 @@
 
 namespace config
 {
-	void load(); 
-	void save();
-	
+	void load();
+	nlohmann::json get();
+
 	extern nlohmann::json data;
 }
