@@ -39,8 +39,13 @@ namespace engine
                     if(presence.startTimestamp == 0) {
                         presence.startTimestamp = time(0);
                     }
-                    
+    
                     presence.partySize = engine::lobbysession::getclientcount(1, 0);
+                    if(presence.partySize <= 0)
+                    {
+                        presence.partySize = 1;
+                    }
+
                     presence.partyMax = engine::lobbysession::getmaxclients(0);
 
                     int lobbymode = *(int*)(engine::lobbysession::getsession(1) + 0x8);
@@ -168,9 +173,9 @@ namespace engine
                     presence.state = "";
                     presence.details = "In the Main Menu";
                     presence.largeImageKey = "logo-black";
-                    presence.largeImageText = "Call of Duty: Black Ops 3";
-                    presence.partyMax = 4;
-                    presence.partySize = 1;
+                    presence.largeImageText = "Call of Duty: Black Ops 3";                   
+                    presence.partySize = 0;
+                    presence.partyMax = 0;
                     presence.instance = 0;
                 }
 
