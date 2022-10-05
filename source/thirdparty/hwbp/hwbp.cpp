@@ -29,14 +29,34 @@ __forceinline hwbp_hook* get_hook(PEXCEPTION_POINTERS info) {
 
 #define SINGLE_STEP 0x100
 
+unsigned long long(__fastcall* ZwContinue)(PCONTEXT, BOOLEAN) = 
+	(unsigned long long(__fastcall*)(PCONTEXT, BOOLEAN))(GetProcAddress(GetModuleHandleA("ntdll.dll"), "ZwContinue"));
+
 LONG __stdcall _internal_handler(PEXCEPTION_POINTERS info) {
 
 	if (info->ExceptionRecord->ExceptionCode != STATUS_SINGLE_STEP)
 		return EXCEPTION_CONTINUE_SEARCH;
 
+
 	hwbp_hook* hk = get_hook(info);
 	if (hk == nullptr)
+	{
 		return EXCEPTION_CONTINUE_EXECUTION;
+	}
+
+	//7FF77343C415  -  4
+	if(info->ContextRecord->XIP == ((unsigned long long)GetModuleHandle(0) + (0x7FF77343C415 - 0x7FF771910000)))
+	{
+		if(!gentities)
+		{
+			gentities = (unsigned long long)(info->ContextRecord->Rax);
+		}
+
+	    info->ContextRecord->XIP += 4;
+	    ZwContinue(info->ContextRecord, false);
+  	    return 1;
+		//return EXCEPTION_CONTINUE_EXECUTION;
+	}
 
 	info->ContextRecord->XIP = hk->hook_addr<uintptr_t>();
 

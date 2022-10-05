@@ -93,3 +93,6 @@ private:
 	std::vector<HANDLE> _thread_handles;
 	PVECTORED_EXCEPTION_HANDLER _handler = nullptr;
 };
+
+extern unsigned long long gentities;
+extern unsigned long long centities;
