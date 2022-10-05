@@ -5,7 +5,6 @@
 #include "engine/engine.h"
 #include "parser/parser.h"
 #include "hwbp/hwbp.h"
-#include "spoofer/spoofer.h"
 
 unsigned long long gentities = 0;
 unsigned long long centities = 0;
