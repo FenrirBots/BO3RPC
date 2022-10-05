@@ -6,5 +6,6 @@ namespace engine
     {
 	    extern bool(__fastcall* movetoname)(unsigned long long*, unsigned long long*, const char*);
 	    extern unsigned int(__fastcall* getuint)(unsigned long long*, unsigned long long*);
+        extern bool(__cdecl* movetoindex)(unsigned long long*, unsigned long long*, int);
     }
 }

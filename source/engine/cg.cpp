@@ -39,7 +39,7 @@ namespace engine
                     if(presence.startTimestamp == 0) {
                         presence.startTimestamp = time(0);
                     }
-    
+
                     presence.partySize = engine::lobbysession::getclientcount(1, 0);
                     if(presence.partySize <= 0)
                     {
