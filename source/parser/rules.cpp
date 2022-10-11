@@ -87,6 +87,7 @@ std::string parser::callbacks::headshots()
 #pragma endregion
 
 
+// Fix an issue where the mapname on anything other than zombies can be empty
 std::string parser::callbacks::mapname()
 {
     if(reinterpret_cast<const char*>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF78AD517A2 - 0x7FF771910000)) == std::string(""))
@@ -120,6 +121,9 @@ std::string parser::callbacks::gentities()
     return string;
 }
 
+// Fix an issue where movetoname returns false randomly
+// Fix an issue where getuint returns 0 randomly
+// Fix an issue where movetoname returns false when offline
 std::string parser::callbacks::round()
 {
 	unsigned long long state;
