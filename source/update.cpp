@@ -64,6 +64,7 @@ HRESULT WINAPI update(IDXGISwapChain* swapchain, UINT interval, UINT flags)
             // name does not work due to the max length value adding
             // a null terminating character at the end of the string.
             /////////////////////////////////////////////////////////////
+            // Fix an issue where the image is empty if the key isnt a coremap
             presence.largeImageKey = fastfile;
             presence.largeImageText = parser::parse("${mapname}", 128).c_str();
             presence.smallImageKey = "logo-black";
@@ -76,8 +77,8 @@ HRESULT WINAPI update(IDXGISwapChain* swapchain, UINT interval, UINT flags)
 
             try
             {
-                std::string lobbymode = "";
-                std::string sessionmode = "";
+                const char* lobbymode = "";
+                const char* sessionmode = "";
 
                 // Developer Note: Puting this directly into the switch value
                 // Will cause the program to crash.
@@ -116,20 +117,47 @@ HRESULT WINAPI update(IDXGISwapChain* swapchain, UINT interval, UINT flags)
                     break;
                 }
 
-                // So many if not empty checks...
-                if(!lobbymode.empty())
+                
+                if(lobbymode != NULL)
                 {
-                    if(!sessionmode.empty())
+                    if(sessionmode != NULL)
                     {
-                        char cdetails[128];
-                        sprintf_s(cdetails, ARRAYSIZE(cdetails), "%s", parser::parse(config::get()["presence"][sessionmode][lobbymode]["details"].get<std::string>()).c_str());
-                        if(cdetails != NULL)
-                            presence.details = cdetails;
+                        char details[128] = "";
+                        char state[128] = "";
 
-                        char cstate[128];
-                        sprintf_s(cstate, ARRAYSIZE(cstate), "%s", parser::parse(config::get()["presence"][sessionmode][lobbymode]["state"].get<std::string>()).c_str());
-                        if(cstate != NULL)
-                            presence.state = cstate;
+                        if(strcmp(sessionmode, "zombies"))
+                        {
+                            const char* partystate = "solo";
+
+                            if(presence.partySize > 1)
+                                partystate = "party";
+
+                            sprintf_s(details, 128, "%s", parser::parse(config::get()["presence"][sessionmode][lobbymode][partystate]["details"].get<std::string>()).c_str());
+                            sprintf_s(state, 128, "%s", parser::parse(config::get()["presence"][sessionmode][lobbymode][partystate]["state"].get<std::string>()).c_str());
+
+                            if(!config::get()["presence"][sessionmode][lobbymode][partystate]["show-timestamp"].get<bool>())
+                                presence.startTimestamp = 0;
+
+                            if(!config::get()["presence"][sessionmode][lobbymode][partystate]["show-playercount"].get<bool>())
+                                presence.instance = 0;
+                        }
+                        else
+                        {
+                            sprintf_s(details, 128, "%s", parser::parse(config::get()["presence"][sessionmode][lobbymode]["details"].get<std::string>()).c_str());
+                            sprintf_s(state, 128, "%s", parser::parse(config::get()["presence"][sessionmode][lobbymode]["state"].get<std::string>()).c_str());
+
+                            if(!config::get()["presence"][sessionmode][lobbymode]["show-timestamp"].get<bool>())
+                                presence.startTimestamp = 0;
+
+                            if(!config::get()["presence"][sessionmode][lobbymode]["show-playercount"].get<bool>())
+                                presence.instance = 0;
+                        }
+
+                        if(details != NULL)
+                            presence.details = details;
+
+                        if(state != NULL)
+                            presence.state = state;
                     }
                 }
             }
@@ -150,6 +178,9 @@ HRESULT WINAPI update(IDXGISwapChain* swapchain, UINT interval, UINT flags)
             presence.partySize = 0;
             presence.partyMax = 0;
             presence.instance = 0;
+
+            // Add support for pregame lobby later
+
             try
             {
                 char cdetails[128];
@@ -173,3 +204,102 @@ HRESULT WINAPI update(IDXGISwapChain* swapchain, UINT interval, UINT flags)
 
     return present(swapchain, interval, flags);
 }
+
+
+
+//                // So many if not empty checks...
+//
+//                    char cdetails[128];
+//
+//                    if(presence.partySize > 1) {
+//                        sprintf_s(cdetails, ARRAYSIZE(cdetails), "%s", parser::parse(config::get()["presence"][sessionmode][lobbymode]["party"]["details"].get<std::string>()).c_str());
+//                    } else {
+//                        sprintf_s(cdetails, ARRAYSIZE(cdetails), "%s", parser::parse(config::get()["presence"][sessionmode][lobbymode]["solo"]["details"].get<std::string>()).c_str());
+//                    } 
+//                        
+//                    if(cdetails != NULL) {
+//                        presence.details = cdetails;
+//                    }
+//
+//
+//                    char cstate[128];
+//                    if(presence.partySize > 1) {
+//                        sprintf_s(cdetails, ARRAYSIZE(cdetails), "%s", parser::parse(config::get()["presence"][sessionmode][lobbymode]["party"]["state"].get<std::string>()).c_str());
+//                    } else {
+//                        sprintf_s(cdetails, ARRAYSIZE(cdetails), "%s", parser::parse(config::get()["presence"][sessionmode][lobbymode]["solo"]["state"].get<std::string>()).c_str());
+//                    }
+//                        
+//                    if(cstate != NULL) {
+//                        presence.state = cstate;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+                    switch(t7api::com::sessionmode::getmode())
+                    {
+                        case MODE_ZOMBIES:
+                            if(presence.partySize > 1)
+                            {
+                                sprintf_s(details, 128, "%s", parser::parse(config::get()["presence"]["zombies"][lobbymode]["party"]["details"].get<std::string>()).c_str());
+                                sprintf_s(state, 128, "%s", parser::parse(config::get()["presence"]["zombies"][lobbymode]["party"]["state"].get<std::string>()).c_str());
+
+                                if(!config::get()["presence"]["zombies"][lobbymode]["party"]["show-timestamp"].get<bool>())
+                                    presence.startTimestamp = 0;
+
+                                if(config::get()["presence"]["zombies"][lobbymode]["party"]["show-playercount"].get<bool>())
+                                    presence.instance = 0;
+                            }
+
+                            else
+                            {
+                                sprintf_s(details, 128, "%s", parser::parse(config::get()["presence"]["zombies"][lobbymode]["solo"]["details"].get<std::string>()).c_str());
+                                sprintf_s(state, 128, "%s", parser::parse(config::get()["presence"]["zombies"][lobbymode]["solo"]["state"].get<std::string>()).c_str());
+
+                                if(!config::get()["presence"]["zombies"][lobbymode]["party"]["show-timestamp"].get<bool>())
+                                    presence.startTimestamp = 0;
+
+                                if(config::get()["presence"]["zombies"][lobbymode]["party"]["show-playercount"].get<bool>())
+                                    presence.instance = 0;
+                            }
+                        break;
+                        case MODE_MULTIPLAYER:
+                            sprintf_s(details, 128, "%s", parser::parse(config::get()["presence"]["multiplayer"][lobbymode]["details"].get<std::string>()).c_str());
+                            sprintf_s(state, 128, "%s", parser::parse(config::get()["presence"]["multiplayer"][lobbymode]["state"].get<std::string>()).c_str());
+                        break;
+
+                                if(!config::get()["multiplayer"]["zombies"][lobbymode]["show-timestamp"].get<bool>())
+                                    presence.startTimestamp = 0;
+
+                                if(config::get()["multiplayer"]["zombies"][lobbymode]["show-playercount"].get<bool>())
+                                    presence.instance = 0;
+                        case MODE_CAMPAIGN:
+                            sprintf_s(details, 128, "%s", parser::parse(config::get()["presence"]["campaign"][lobbymode]["details"].get<std::string>()).c_str());
+                            sprintf_s(state, 128, "%s", parser::parse(config::get()["presence"]["campaign"][lobbymode]["state"].get<std::string>()).c_str());
+
+                                if(!config::get()["presence"]["campaign"][lobbymode]["show-timestamp"].get<bool>())
+                                    presence.startTimestamp = 0;
+
+                                if(config::get()["presence"]["campaign"][lobbymode]["show-playercount"].get<bool>())
+                                    presence.instance = 0;
+                        break;
+                    }
+
+
+*/
