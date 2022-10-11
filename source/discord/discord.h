@@ -2,8 +2,8 @@
 #include <Atomic>
 #include <Mutex>
 #include <Windows.h>
-#include "discord/discord_register.h"
-#include "discord/discord_rpc.h"
+#include "thirdparty/discord/discord_register.h"
+#include "thirdparty/discord/discord_rpc.h"
 
 
 struct MultiThreadedPresence : public std::mutex
@@ -13,20 +13,19 @@ struct MultiThreadedPresence : public std::mutex
 
 namespace discord
 {
-	DWORD WINAPI thread(LPVOID);
-
-	extern std::atomic<bool> update;
-	extern std::atomic<bool> running;
-
-	namespace presence
-	{
-		extern MultiThreadedPresence data;
-
+    namespace presence
+    {
 		void initialize(const char* applicationId, int autoRegister, const char* optionalSteamId);
 		DiscordRichPresence get();
 		void set(DiscordRichPresence presence);
 		void update(DiscordRichPresence* presence);
 		void clear();
 		void shutdown();
-	}
+    
+        extern MultiThreadedPresence data;
+    }
+    
+	DWORD WINAPI thread(LPVOID);
+    extern std::atomic<bool> update;
+    extern std::atomic<bool> running;
 }

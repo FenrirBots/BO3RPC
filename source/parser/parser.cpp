@@ -35,12 +35,14 @@ namespace parser
     std::vector<rule_t> rules;
 	bool removeinvalid;
 
-	std::string parse(std::string input, size_t maxlength)
+	std::string parse(const std::string input, size_t maxlength)
 	{
 		std::string output(input);
 
 		int count = 0;
 
+		// This should be a for loop
+		// for(int count = 0; count < PARSER_ABORTCOUNT; count++)
 		while (true)
 		{
 			bool parsed = false;
@@ -61,7 +63,9 @@ namespace parser
 				break;
 			}
 
-			// Safeguard against infinite loops
+			// Safeguard against infinite loops.
+			// This can occour if someone adds there own rule where the callback
+			// returns the same string of characters as the rule itself.
 			if(count > PARSER_ABORTCOUNT)
 			{
 				break;
@@ -96,17 +100,19 @@ namespace parser
 			{
 				output.resize(maxlength);
 			}
+
+			output[maxlength - 1] = '\0';
 		}
 		
 		return output;
 	}
 
-	std::string parse(std::string input)
+	std::string parse(const std::string input)
 	{
 		return parse(input, 0);
 	}
 
-	void addrule(std::string content, std::string(*callback)())
+	void addrule(const std::string content, std::string(*callback)())
 	{
 		parser::rules.push_back(rule_t{ content, content.length(), callback });
 	}
