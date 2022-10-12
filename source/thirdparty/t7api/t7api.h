@@ -34,6 +34,11 @@ namespace t7api
 	    extern bool (__cdecl* isingame)();
     	extern bool (__fastcall* ismode)(eModes);
 
+        namespace localclient
+        {
+            extern int (__fastcall* getcontrollerindex)(uint);
+        }
+
 	    namespace sessionmode
 	    {
 	    	extern int (__cdecl* getmode)();
@@ -45,6 +50,7 @@ namespace t7api
 	    extern bool (__fastcall* movetoname)(ulong*, ulong*, const char*);
 	    extern uint (__fastcall* getuint)(ulong*, ulong*);
         extern bool (__cdecl* movetoindex)(ulong*, ulong*, int);
+        extern bool (__fastcall* movetopath)(ulong*, ulong*, const char**);
     }
 
     namespace demo
@@ -53,6 +59,11 @@ namespace t7api
         extern bool (__cdecl* isplaying)();
         extern bool (__cdecl* ispaused)();
         extern bool (__cdecl* isplaybackinited)();
+    }
+
+    namespace livestats
+    {
+        extern ulong (__fastcall* getintzombiestatbykey)(ulong, ulong, ulong);
     }
 
     namespace lobbysession
