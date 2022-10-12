@@ -125,12 +125,9 @@ HRESULT WINAPI update(IDXGISwapChain* swapchain, UINT interval, UINT flags)
                         char details[128] = "";
                         char state[128] = "";
 
-                        if(strcmp(sessionmode, "zombies"))
+                        if(strcmp(sessionmode, "zombies") == 0)
                         {
-                            const char* partystate = "solo";
-
-                            if(presence.partySize > 1)
-                                partystate = "party";
+                            const char* partystate = (presence.partySize > 1) ? "party" : "solo";
 
                             sprintf_s(details, 128, "%s", parser::parse(config::get()["presence"][sessionmode][lobbymode][partystate]["details"].get<std::string>()).c_str());
                             sprintf_s(state, 128, "%s", parser::parse(config::get()["presence"][sessionmode][lobbymode][partystate]["state"].get<std::string>()).c_str());
@@ -161,7 +158,7 @@ HRESULT WINAPI update(IDXGISwapChain* swapchain, UINT interval, UINT flags)
                     }
                 }
             }
-            catch(...) {}
+            catch(nlohmann::json::exception &e) { OutputDebugStringA(e.what()); }
         }
         else
         {
@@ -192,10 +189,8 @@ HRESULT WINAPI update(IDXGISwapChain* swapchain, UINT interval, UINT flags)
                 sprintf_s(cstate, ARRAYSIZE(cstate), "%s", parser::parse(config::get()["presence"]["mainmenu"]["state"].get<std::string>()).c_str());
                 if(cstate != NULL)
                     presence.state = cstate;
-
-                OutputDebugStringA(cstate);
             }
-            catch(...) {}
+            catch(nlohmann::json::exception &e) { OutputDebugStringA(e.what()); }
         }
 
         discord::presence::set(presence);
