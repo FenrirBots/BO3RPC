@@ -9,5 +9,7 @@ bool(__fastcall* t7api::com::ismode)(eModes) =
 int(__cdecl* t7api::com::sessionmode::getmode)() = 
     reinterpret_cast<int(__cdecl*)()>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF773A07790 - 0x7FF771910000));
 
-ulong(__fastcall* t7api::com::localclient::getcontrollerindex)(uint) = 
-    reinterpret_cast<ulong(__fastcall*)(uint)>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF773A00390- 0x7FF771910000));
+long long(__cdecl* t7api::com::localclient::getcontrollerindex)(int) = 
+    (long long(__cdecl*)(int))((unsigned long long)GetModuleHandle(0) + (0x7FF773A00390- 0x7FF771910000));
+//
+//    reinterpret_cast<long long(__cdecl*)(int)>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF773A00390- 0x7FF771910000));

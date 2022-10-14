@@ -36,7 +36,7 @@ namespace t7api
 
         namespace localclient
         {
-            extern int (__fastcall* getcontrollerindex)(uint);
+            extern long long (__cdecl* getcontrollerindex)(int);
         }
 
 	    namespace sessionmode
@@ -64,6 +64,11 @@ namespace t7api
     namespace livestats
     {
         extern ulong (__fastcall* getintzombiestatbykey)(ulong, ulong, ulong);
+    }
+
+    namespace livestorage
+    {
+        extern ulong (__fastcall* getstatsbufferwithcaller)(ulong, const char*, const char*, int, uint, uint);
     }
 
     namespace lobbysession
