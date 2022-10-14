@@ -8,6 +8,11 @@
 #include "update.h"
 #include "parser/parser.h"
 
+// TODO: Fix the Round Value randomly being 0.
+// TODO: Add rules for Primary, Secondary and Mule Kick guns.
+// TODO: Add a rule for the current easteregg step on zombies.
+// TODO: Add a rule for the already done easteregg's in zombies.
+
 unsigned long long g_entities = 0;
 HRESULT(__stdcall* present)(IDXGISwapChain*, UINT, UINT);
 
@@ -21,6 +26,8 @@ HRESULT WINAPI update(IDXGISwapChain* swapchain, UINT interval, UINT flags)
 {
     if(GetAsyncKeyState(VK_F9) & 0x8000)
     {
+        t7api::cg::boldgamemessagecenter(0, "Detaching from process...");
+
         discord::running.store(false);
         kiero::unbind(8);
         kiero::shutdown();
@@ -32,6 +39,7 @@ HRESULT WINAPI update(IDXGISwapChain* swapchain, UINT interval, UINT flags)
 
     if(GetAsyncKeyState(VK_F5) & 0x8000)
     {
+        t7api::cg::boldgamemessagecenter(0, "Attempting to reload the config...");
         config::load();
     }
     
@@ -180,15 +188,15 @@ HRESULT WINAPI update(IDXGISwapChain* swapchain, UINT interval, UINT flags)
 
             try
             {
-                char cdetails[128];
-                sprintf_s(cdetails, ARRAYSIZE(cdetails), "%s", parser::parse(config::get()["presence"]["mainmenu"]["details"].get<std::string>()).c_str());
-                if(cdetails != NULL)
-                    presence.details = cdetails;
+                char details[128];
+                sprintf_s(details, 128, "%s", parser::parse(config::get()["presence"]["mainmenu"]["details"].get<std::string>()).c_str());
+                if(details != NULL)
+                    presence.details = details;
                 
-                char cstate[128];
-                sprintf_s(cstate, ARRAYSIZE(cstate), "%s", parser::parse(config::get()["presence"]["mainmenu"]["state"].get<std::string>()).c_str());
-                if(cstate != NULL)
-                    presence.state = cstate;
+                char state[128];
+                sprintf_s(state, 128, "%s", parser::parse(config::get()["presence"]["mainmenu"]["state"].get<std::string>()).c_str());
+                if(state != NULL)
+                    presence.state = state;
             }
             catch(nlohmann::json::exception &e) { OutputDebugStringA(e.what()); }
         }
