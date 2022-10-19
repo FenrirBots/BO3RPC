@@ -37,18 +37,17 @@ call %BuildTools64%
 echo [BUILD]: COMPILING
 call cl.exe /nologo /EHsc /W4 /O2 /MD /std:c++17 /D_USRDLL /D_WINDLL /D_NDEBUG /Fo"bin\presence\intermediate\\" /I"..\source" /c ^
 /Tp"..\source\config.cpp" ^
+/Tp"..\source\main.cpp" ^
+/Tp"..\source\update.cpp" ^
 /Tp"..\source\discord\discord.cpp" ^
 /Tp"..\source\discord\presence.cpp" ^
-/Tp"..\source\main.cpp" ^
 /Tp"..\source\parser\parser.cpp" ^
 /Tp"..\source\parser\rules.cpp" ^
-/Tp"..\source\threads\attach.cpp" ^
-/Tp"..\source\threads\detach.cpp" ^
-/Tp"..\source\update.cpp" ^
 /Tp"..\source\thirdparty\t7api\cg.cpp" ^
 /Tp"..\source\thirdparty\t7api\com.cpp" ^
 /Tp"..\source\thirdparty\t7api\ddl.cpp" ^
 /Tp"..\source\thirdparty\t7api\demo.cpp" ^
+/Tp"..\source\thirdparty\t7api\g.cpp" ^
 /Tp"..\source\thirdparty\t7api\livestats.cpp" ^
 /Tp"..\source\thirdparty\t7api\livestorage.cpp" ^
 /Tp"..\source\thirdparty\t7api\lobbysession.cpp" ^
@@ -58,7 +57,9 @@ call cl.exe /nologo /EHsc /W4 /O2 /MD /std:c++17 /D_USRDLL /D_WINDLL /D_NDEBUG /
 /Tc"..\source\thirdparty\hook\minhook\hde\hde64.c" ^
 /Tc"..\source\thirdparty\hook\minhook\trampoline.c" ^
 /Tc"..\source\thirdparty\hook\minhook\buffer.c" ^
-/Tc"..\source\thirdparty\hook\minhook\hook.c"
+/Tc"..\source\thirdparty\hook\minhook\hook.c" ^
+/Tp"..\source\threads\attach.cpp" ^
+/Tp"..\source\threads\detach.cpp" 
 
 echo.
 echo [BUILD]: LINKING
