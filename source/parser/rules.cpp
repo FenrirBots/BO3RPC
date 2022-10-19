@@ -121,19 +121,20 @@ std::string parser::callbacks::gentities()
     return string;
 }
 
-// Fix an issue where movetoname returns false randomly
-// Fix an issue where getuint returns 0 randomly
-// Fix an issue where movetoname returns false when offline
 std::string parser::callbacks::round()
 {
-	unsigned long long state;
-	if (t7api::ddl::movetoname(&*reinterpret_cast<unsigned long long*>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF774C3F680 - 0x7FF771910000)), &state, "numZombieRounds"))
-	{
-		int round = t7api::ddl::getuint(&state, &*reinterpret_cast<unsigned long long*>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF77B506A20 - 0x7FF771910000)));
-		return std::to_string(round + 1);
-	}
+    unsigned long long matchstate = 0;
+    matchstate = t7api::g::getmatchstate();
 
-	return "0";
+    if(matchstate != 0)
+    {
+        int round = 0;
+        round = *(int*)(matchstate + 0x18C);
+
+        return std::to_string(round);
+    }
+    
+    return "0";
 }
 
 std::string parser::callbacks::sessionmode()
