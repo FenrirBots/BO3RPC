@@ -8,10 +8,11 @@
 #include "update.h"
 #include "parser/parser.h"
 
-// TODO: Fix the Round Value randomly being 0.
+// TODO: Update the default config in config.cpp
 // TODO: Add rules for Primary, Secondary and Mule Kick guns.
 // TODO: Add a rule for the current easteregg step on zombies.
 // TODO: Add a rule for the already done easteregg's in zombies.
+// TODO: Find a way to make the strcmp while ingame 1 set of strcmp and not 2-3 seperate sets.
 
 unsigned long long g_entities = 0;
 HRESULT(__stdcall* present)(IDXGISwapChain*, UINT, UINT);
@@ -63,23 +64,33 @@ HRESULT WINAPI update(IDXGISwapChain* swapchain, UINT interval, UINT flags)
             if(presence.partyMax <= 0)
                 presence.partyMax = 1;
 
-            // Developer Note: Puting this directly into largeImageKey
-            // will cause the program to crash.
-            /////////////////////////////////////////////////////////////
-            const char* fastfile = reinterpret_cast<const char*>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF77AD1E5E8 - 0x7FF771910000));
+            std::string fastfile = reinterpret_cast<const char*>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF77AD1E5E8 - 0x7FF771910000));
 
-            // Developer Note: Using the parser to get the fastfile
-            // name does not work due to the max length value adding
-            // a null terminating character at the end of the string.
-            /////////////////////////////////////////////////////////////
-            // Fix an issue where the image is empty if the key isnt a coremap
-            presence.largeImageKey = fastfile;
+            if(fastfile.starts_with("zm_"))
+            {
+                if(fastfile != "zm_zod" &&
+                   fastfile != "zm_factory" &&
+                   fastfile != "zm_castle" &&
+                   fastfile != "zm_island" &&
+                   fastfile != "zm_stalingrad" &&
+                   fastfile != "zm_genesis" &&
+                   fastfile != "zm_prototype" &&
+                   fastfile != "zm_asylum" &&
+                   fastfile != "zm_sumpf" &&
+                   fastfile != "zm_theater" &&
+                   fastfile != "zm_cosmodrome" &&
+                   fastfile != "zm_temple" &&
+                   fastfile != "zm_moon" &&
+                   fastfile != "zm_tomb")
+                fastfile = "usermaps";
+            }
+
+            presence.largeImageKey = fastfile.c_str();
             presence.largeImageText = parser::parse("${mapname}", 128).c_str();
             presence.smallImageKey = "logo-black";
-            
+
             presence.state = "";
             presence.details = "";
-
 
             presence.instance = 1;
 
@@ -100,15 +111,17 @@ HRESULT WINAPI update(IDXGISwapChain* swapchain, UINT interval, UINT flags)
                     case LOBBY_MODE_CUSTOM:
                     lobbymode = "customs";
                     break;
-                    case LOBBY_MODE_THEATER:
-                    lobbymode = "theater";
-                    break;
+                  // Commented out until support is added
+                  //case LOBBY_MODE_THEATER:
+                  //lobbymode = "theater";
+                  //break;
                     case LOBBY_MODE_ARENA:
                     lobbymode = "arena";
                     break;
-                    case LOBBY_MODE_FREERUN:
-                    lobbymode = "freerun";
-                    break;
+                  // Commented out until support is added
+                  //case LOBBY_MODE_FREERUN:
+                  //lobbymode = "freerun";
+                  //break;
 
                 }
 
