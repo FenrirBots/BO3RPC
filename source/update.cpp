@@ -24,6 +24,8 @@ std::chrono::seconds getdelta(std::chrono::steady_clock::time_point now)
 
 HRESULT WINAPI update(IDXGISwapChain* swapchain, UINT interval, UINT flags)
 {
+    // This wont get a keydown check as if it fails it 
+    // will most likely crash the game so it isnt needed...
     if(GetAsyncKeyState(VK_F9) & 0x8000)
     {
         t7api::cg::boldgamemessagecenter(0, "Detaching from process...");
