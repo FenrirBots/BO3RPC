@@ -42,15 +42,17 @@ namespace t7api
 	    namespace sessionmode
 	    {
 	    	extern int (__cdecl* getmode)();
+            extern bool (__cdecl* isonlinegame)();
 	    }
     }
 
     namespace ddl
     {
+        extern ulong(__fastcall* getvalue)(ulong*, ulong*);
 	    extern bool (__fastcall* movetoname)(ulong*, ulong*, const char*);
 	    extern uint (__fastcall* getuint)(ulong*, ulong*);
         extern bool (__cdecl* movetoindex)(ulong*, ulong*, int);
-        extern bool (__fastcall* movetopath)(ulong*, ulong*, const char**);
+        extern bool (__fastcall* movetopath)(ulong*, ulong*, int, const char**);
     }
 
     namespace demo
@@ -61,14 +63,30 @@ namespace t7api
         extern bool (__cdecl* isplaybackinited)();
     }
 
+    namespace g
+    {
+        extern ulong (__cdecl* getmatchstate)();
+    }
+
     namespace livestats
     {
-        extern ulong (__fastcall* getintzombiestatbykey)(ulong, ulong, ulong);
+        extern ulong (__fastcall* getintzombiestatbykey)(uint, const char*, ulong*);
+
+        namespace core
+        {
+            extern ulong (__fastcall* getddlrootstate)(int);
+            extern ulong (__fastcall* getddlcontext)(ulong, int);
+        }
     }
 
     namespace livestorage
     {
         extern ulong (__fastcall* getstatsbufferwithcaller)(ulong, const char*, const char*, int, uint, uint);
+
+        namespace core
+        {
+            extern ulong (__fastcall* getddlrootstate)(int);
+        }
     }
 
     namespace lobbysession
