@@ -5,48 +5,79 @@
 #include "config.h"
 
 const char* DEFAULT_CONFIGURATION = "{ \
-\n    \"lobby_mode\": \
-\n    { \
-\n        \"public\": \
-\n        { \
-\n            \"multiplayer\": \
-\n            { \
-\n                \"state\": \"\", \
-\n                \"details\": \"\" \
-\n            }, \
-\n            \"zombies\": \
-\n            { \
-\n                \"solo\": \
-\n                { \
-\n                    \"state\": \"Playing Solo\", \
-\n                    \"details\": \"Round ${round} on ${mapname}\" \
+\n    \"remove-invalid-rules\": true, \
+\n    \"presence\": { \
+\n        \"zombies\": { \
+\n            \"public\": { \
+\n                \"solo\": { \
+\n                    \"state\": \"Round ${round} | ${kills} kills | ${downs} downs\", \
+\n                    \"details\": \"${sessionmode} : Playing Solo on ${mapname}\", \
+\n                    \"show-timestamp\": true, \
+\n                    \"show-playercount\": true \
 \n                }, \
-\n                \"party\": \
-\n                { \
-\n                    \"state\": \"In a Party\", \
-\n                    \"details\": \"Round ${round} on ${mapname}\" \
+\n                \"party\": { \
+\n                    \"state\": \"Round ${round} | ${kills} kills | ${downs} downs\", \
+\n                    \"details\": \"${sessionmode} | In a Party on ${mapname}\", \
+\n                    \"show-timestamp\": true, \
+\n                    \"show-playercount\": true \
 \n                } \
 \n            }, \
-\n            \"campaign\": \
-\n            { \
-\n                \"state\": \"\", \
-\n                \"details\": \"\" \
+\n            \"customs\": { \
+\n                \"solo\": { \
+\n                    \"state\": \"Round ${round} | ${kills} kills | ${downs} downs\", \
+\n                    \"details\": \"${sessionmode} : Playing Solo on ${mapname}\", \
+\n                    \"show-timestamp\": true, \
+\n                    \"show-playercount\": true \
+\n                }, \
+\n                \"party\": { \
+\n                    \"state\": \"Round ${round} | ${kills} kills | ${downs} downs\", \
+\n                    \"details\": \"${sessionmode} | In a Party on ${mapname}\", \
+\n                    \"show-timestamp\": true, \
+\n                    \"show-playercount\": true \
+\n                } \
 \n            } \
 \n        }, \
-\n        \"theater\": \
-\n        { \
-\n            \"state\": \"In Theater Mode\", \
-\n            \"details\": \"Watching ${videoname}\" \
+\n \
+\n        \"multiplayer\": { \
+\n            \"public\": { \
+\n                \"state\": \"Playing ${gamemode} on ${mapname} : ${score}\", \
+\n                \"details\": \"${kills} kills : ${deaths} deaths : ${assists} assists\", \
+\n                \"show-timestamp\": true, \
+\n                \"show-playercount\": true \
+\n            }, \
+\n            \"customs\": { \
+\n                \"state\": \"Playing ${gamemode} on ${mapname} : ${score}\", \
+\n                \"details\": \"${kills} kills : ${deaths} deaths : ${assists} assists\", \
+\n                \"show-timestamp\": true, \
+\n                \"show-playercount\": true \
+\n            }, \
+\n            \"arena\": { \
+\n                \"state\": \"Playing ${gamemode} on ${mapname} : ${score}\", \
+\n                \"details\": \"${kills} kills : ${deaths} deaths : ${assists} assists\", \
+\n                \"show-timestamp\": true, \
+\n                \"show-playercount\": true \
+\n            } \
 \n        }, \
-\n        \"arena\": \
-\n        { \
-\n            \"state\": \"\", \
-\n            \"details\": \"\" \
+\n \
+\n        \"campaign\": { \
+\n            \"public\": { \
+\n                \"state\": \"${sessionmode} on ${mapname}\", \
+\n                \"details\": \"${difficulty} difficulty : ${kills} kills\", \
+\n                \"show-timestamp\": true, \
+\n                \"show-playercount\": false \
+\n            }, \
+\n            \"customs\": { \
+\n                \"state\": \"${sessionmode} on ${mapname}\", \
+\n                \"details\": \"${difficulty} difficulty : ${kills} kills\", \
+\n                \"show-timestamp\": true, \
+\n                \"show-playercount\": false \
+\n            } \
 \n        }, \
-\n        \"freerun\": \
-\n        { \
-\n            \"state\": \"\", \
-\n            \"details\": \"\" \
+\n        \"mainmenu\": { \
+\n            \"state\": \"In the Main Menu\", \
+\n            \"details\": \"\", \
+\n            \"show-timestamp\": false, \
+\n            \"show-playercount\": false \
 \n        } \
 \n    } \
 \n}";

@@ -8,7 +8,6 @@
 #include "update.h"
 #include "parser/parser.h"
 
-// TODO: Update the default config in config.cpp
 // TODO: Add rules for Primary, Secondary and Mule Kick guns.
 // TODO: Add a rule for the current easteregg step on zombies.
 // TODO: Add a rule for the already done easteregg's in zombies.
