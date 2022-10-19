@@ -38,10 +38,23 @@ HRESULT WINAPI update(IDXGISwapChain* swapchain, UINT interval, UINT flags)
         return present(swapchain, interval, flags);
     }
 
+    static bool ConfigKeyDown = false;
     if(GetAsyncKeyState(VK_F5) & 0x8000)
     {
-        t7api::cg::boldgamemessagecenter(0, "Attempting to reload the config...");
-        config::load();
+        if(ConfigKeyDown == false)
+        {
+            ConfigKeyDown = true;
+        
+            t7api::cg::boldgamemessagecenter(0, "Attempting to reload the config...");
+            config::load();
+        }
+    }
+    else
+    {
+        if(ConfigKeyDown == true)
+        {
+            ConfigKeyDown = false;
+        }
     }
     
     std::chrono::steady_clock steady_clock;
@@ -66,7 +79,7 @@ HRESULT WINAPI update(IDXGISwapChain* swapchain, UINT interval, UINT flags)
 
             std::string fastfile = reinterpret_cast<const char*>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF77AD1E5E8 - 0x7FF771910000));
 
-            if(fastfile.starts_with("zm_"))
+            if(fastfile._Starts_with("zm_"))
             {
                 if(fastfile != "zm_zod" &&
                    fastfile != "zm_factory" &&
