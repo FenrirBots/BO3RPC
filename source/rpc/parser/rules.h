@@ -20,14 +20,14 @@ namespace parser
         std::string fastfile();
         std::string round();
         std::string sessionmode();
+        std::string difficulty();
 
+        // Debug Rules
         std::string gentities();
+
         /*
         std::string friendcode();
         std::string username();
-        std::string fastfile();
-        std::string mapname();
-        std::string round();
         std::string weapon_primary();
         std::string weapon_secondary();
         std::string weapon_mulekick();

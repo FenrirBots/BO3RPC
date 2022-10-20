@@ -30,6 +30,7 @@ DWORD WINAPI threads::attach(LPVOID /* lpvReserved */)
     parser::addrule("${round}", parser::callbacks::round);
     parser::addrule("${username}", parser::callbacks::username);
     parser::addrule("${sessionmode}", parser::callbacks::sessionmode);
+    parser::addrule("${difficulty}", parser::callbacks::difficulty);
 
     if(KIEROFAILED(kiero::init(kiero::RenderType::D3D11))  ||
        KIEROFAILED(kiero::bind(8, (void**)&present, update)))

@@ -27,13 +27,13 @@ const char* DEFAULT_CONFIGURATION = "//======Parser Rules======// \
 \n            \"public\": { \
 \n                \"solo\": { \
 \n                    \"state\": \"Round ${round} | ${kills} kills | ${downs} downs\", \
-\n                    \"details\": \"${sessionmode} : Playing Solo on ${mapname}\", \
+\n                    \"details\": \"Playing Solo on ${mapname}\", \
 \n                    \"show-timestamp\": true, \
 \n                    \"show-playercount\": true \
 \n                }, \
 \n                \"party\": { \
 \n                    \"state\": \"Round ${round} | ${kills} kills | ${downs} downs\", \
-\n                    \"details\": \"${sessionmode} | In a Party on ${mapname}\", \
+\n                    \"details\": \"In a Party on ${mapname}\", \
 \n                    \"show-timestamp\": true, \
 \n                    \"show-playercount\": true \
 \n                } \
@@ -41,13 +41,13 @@ const char* DEFAULT_CONFIGURATION = "//======Parser Rules======// \
 \n            \"customs\": { \
 \n                \"solo\": { \
 \n                    \"state\": \"Round ${round} | ${kills} kills | ${downs} downs\", \
-\n                    \"details\": \"${sessionmode} : Playing Solo on ${mapname}\", \
+\n                    \"details\": \"Playing Solo on ${mapname}\", \
 \n                    \"show-timestamp\": true, \
 \n                    \"show-playercount\": true \
 \n                }, \
 \n                \"party\": { \
 \n                    \"state\": \"Round ${round} | ${kills} kills | ${downs} downs\", \
-\n                    \"details\": \"${sessionmode} | In a Party on ${mapname}\", \
+\n                    \"details\": \"In a Party on ${mapname}\", \
 \n                    \"show-timestamp\": true, \
 \n                    \"show-playercount\": true \
 \n                } \
@@ -56,20 +56,20 @@ const char* DEFAULT_CONFIGURATION = "//======Parser Rules======// \
 \n \
 \n        \"multiplayer\": { \
 \n            \"public\": { \
-\n                \"state\": \"Playing ${gamemode} on ${mapname} : ${score}\", \
-\n                \"details\": \"${kills} kills : ${deaths} deaths : ${assists} assists\", \
+\n                \"state\": \"${kills} kills : ${deaths} deaths : ${assists} assists\", \
+\n                \"details\": \"Playing ${gamemode} on ${mapname} : ${score}\", \
 \n                \"show-timestamp\": true, \
 \n                \"show-playercount\": true \
 \n            }, \
 \n            \"customs\": { \
-\n                \"state\": \"Playing ${gamemode} on ${mapname} : ${score}\", \
-\n                \"details\": \"${kills} kills : ${deaths} deaths : ${assists} assists\", \
+\n                \"state\": \"${kills} kills : ${deaths} deaths : ${assists} assists\", \
+\n                \"details\": \"Playing ${gamemode} on ${mapname} : ${score}\", \
 \n                \"show-timestamp\": true, \
 \n                \"show-playercount\": true \
 \n            }, \
 \n            \"arena\": { \
-\n                \"state\": \"Playing ${gamemode} on ${mapname} : ${score}\", \
-\n                \"details\": \"${kills} kills : ${deaths} deaths : ${assists} assists\", \
+\n                \"state\": \"${kills} kills : ${deaths} deaths : ${assists} assists\", \
+\n                \"details\": \"Playing ${gamemode} on ${mapname} : ${score}\", \
 \n                \"show-timestamp\": true, \
 \n                \"show-playercount\": true \
 \n            } \
@@ -77,14 +77,14 @@ const char* DEFAULT_CONFIGURATION = "//======Parser Rules======// \
 \n \
 \n        \"campaign\": { \
 \n            \"public\": { \
-\n                \"state\": \"${sessionmode} on ${mapname}\", \
-\n                \"details\": \"${difficulty} difficulty : ${kills} kills\", \
+\n                \"state\": \"${score} score | ${kills} kills | ${assists} assists\", \
+\n                \"details\": \"${mapname} on ${difficulty}\", \
 \n                \"show-timestamp\": true, \
 \n                \"show-playercount\": false \
 \n            }, \
 \n            \"customs\": { \
-\n                \"state\": \"${sessionmode} on ${mapname}\", \
-\n                \"details\": \"${difficulty} difficulty : ${kills} kills\", \
+\n                \"state\": \"${score} score | ${kills} kills | ${assists} assists\", \
+\n                \"details\": \"${mapname} on ${difficulty}\", \
 \n                \"show-timestamp\": true, \
 \n                \"show-playercount\": false \
 \n            } \

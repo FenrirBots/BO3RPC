@@ -90,12 +90,14 @@ std::string parser::callbacks::headshots()
 // Fix an issue where the mapname on anything other than zombies can be empty
 std::string parser::callbacks::mapname()
 {
-    if(reinterpret_cast<const char*>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF78AD517A2 - 0x7FF771910000)) == std::string(""))
-    {
-        return "usermaps";
-    }
+    return t7api::cg::getmatchscoreboardmapname(0);
+    
+    //if(reinterpret_cast<const char*>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF78AD517A2 - 0x7FF771910000)) == std::string(""))
+    //{
+    //    return "usermaps";
+    //}
 
-    return reinterpret_cast<const char*>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF78AD517A2 - 0x7FF771910000));
+    //return reinterpret_cast<const char*>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF78AD517A2 - 0x7FF771910000));
 }
 
 std::string parser::callbacks::fastfile()
@@ -149,4 +151,34 @@ std::string parser::callbacks::sessionmode()
             return "Campaign";
     }
     return "Invalid Mode";
+}
+
+/*
+enum DIFFICULTIES : __int32
+{
+  DIFFICULTY_EASY = 0x0,
+  DIFFICULTY_MEDIUM = 0x1,
+  DIFFICULTY_HARD = 0x2,
+  DIFFICULTY_VETERAN = 0x3,
+  DIFFICULTY_FU = 0x4,
+};
+*/
+
+const char* m_CampaignDifficulties[5] = {"Easy", "Medium", "Hard", "Veteran", "Realistic"};
+const char* m_MultiplayerDifficulties[5] = {"Easy", "Medium", "Hard", "Veteran", "Realistic"};
+
+std::string parser::callbacks::difficulty()
+{
+    unsigned long long controllerindex = t7api::com::localclient::getcontrollerindex(0);
+    unsigned int difficulty = t7api::settings::getuint("g_skilltype", controllerindex);
+
+    switch(t7api::com::sessionmode::getmode())
+    {
+    case MODE_CAMPAIGN:
+        return m_CampaignDifficulties[difficulty];
+    case MODE_MULTIPLAYER:
+        return m_MultiplayerDifficulties[difficulty];
+    }
+ 
+    return "UNKNOWN";
 }

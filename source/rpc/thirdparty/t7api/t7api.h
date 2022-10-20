@@ -24,6 +24,7 @@ namespace t7api
 {
     namespace cg
     {
+        extern const char*(__fastcall* getmatchscoreboardmapname)(unsigned int);
     	extern void (__fastcall* draw2d)(int);
     	extern void (__fastcall* draw2dinternal)(int);
     	extern void (__fastcall* boldgamemessagecenter)(int, const char*);
@@ -95,5 +96,10 @@ namespace t7api
         extern ulong (__fastcall* getsession)(uint);
         extern int (__fastcall* ismode)(uint);
         extern int (__fastcall* getclientcount)(uint, uint);
+    }
+
+    namespace settings
+    {
+        extern unsigned long long (__fastcall* getuint)(const char*, unsigned long long);
     }
 }
