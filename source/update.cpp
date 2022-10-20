@@ -8,10 +8,14 @@
 #include "update.h"
 #include "parser/parser.h"
 
+// TODO: Add gamemode checks to parser rules that crash when used on the wrong game.
+// TODO: Add parser rules for Freerun and Theater mode.
 // TODO: Add rules for Primary, Secondary and Mule Kick guns.
 // TODO: Add a rule for the current easteregg step on zombies.
 // TODO: Add a rule for the already done easteregg's in zombies.
 // TODO: Find a way to make the strcmp while ingame 1 set of strcmp and not 2-3 seperate sets.
+// TODO: Add descriptions to parser rules.
+// TODO: Stop using so many fucking namespaces.
 
 unsigned long long g_entities = 0;
 HRESULT(__stdcall* present)(IDXGISwapChain*, UINT, UINT);
@@ -25,7 +29,7 @@ std::chrono::seconds getdelta(std::chrono::steady_clock::time_point now)
 HRESULT WINAPI update(IDXGISwapChain* swapchain, UINT interval, UINT flags)
 {
     // This wont get a keydown check as if it fails it 
-    // will most likely crash the game so it isnt needed...
+    // will most likely crash the game.
     if(GetAsyncKeyState(VK_F9) & 0x8000)
     {
         t7api::cg::boldgamemessagecenter(0, "Detaching from process...");
@@ -136,7 +140,6 @@ HRESULT WINAPI update(IDXGISwapChain* swapchain, UINT interval, UINT flags)
                   //case LOBBY_MODE_FREERUN:
                   //lobbymode = "freerun";
                   //break;
-
                 }
 
                 switch(t7api::com::sessionmode::getmode())
