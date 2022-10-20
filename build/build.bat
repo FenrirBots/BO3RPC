@@ -36,30 +36,30 @@ call %BuildTools64%
 
 echo [BUILD]: COMPILING
 call cl.exe /nologo /EHsc /W4 /O2 /MD /std:c++17 /D_USRDLL /D_WINDLL /D_NDEBUG /Fo"bin\rpc\intermediate\\" /I"..\source\rpc" /c ^
-/Tp"..\rpc\source\config.cpp" ^
-/Tp"..\rpc\source\main.cpp" ^
-/Tp"..\rpc\source\update.cpp" ^
-/Tp"..\rpc\source\discord\discord.cpp" ^
-/Tp"..\rpc\source\discord\presence.cpp" ^
-/Tp"..\rpc\source\parser\parser.cpp" ^
-/Tp"..\rpc\source\parser\rules.cpp" ^
-/Tp"..\rpc\source\thirdparty\t7api\cg.cpp" ^
-/Tp"..\rpc\source\thirdparty\t7api\com.cpp" ^
-/Tp"..\rpc\source\thirdparty\t7api\ddl.cpp" ^
-/Tp"..\rpc\source\thirdparty\t7api\demo.cpp" ^
-/Tp"..\rpc\source\thirdparty\t7api\g.cpp" ^
-/Tp"..\rpc\source\thirdparty\t7api\livestats.cpp" ^
-/Tp"..\rpc\source\thirdparty\t7api\livestorage.cpp" ^
-/Tp"..\rpc\source\thirdparty\t7api\lobbysession.cpp" ^
-/Tp"..\rpc\source\thirdparty\hook\kiero.cpp" ^
-/Tp"..\rpc\source\thirdparty\hook\hardware-breakpoint.cpp" ^
-/Tc"..\rpc\source\thirdparty\hook\minhook\hde\hde32.c" ^
-/Tc"..\rpc\source\thirdparty\hook\minhook\hde\hde64.c" ^
-/Tc"..\rpc\source\thirdparty\hook\minhook\trampoline.c" ^
-/Tc"..\rpc\source\thirdparty\hook\minhook\buffer.c" ^
-/Tc"..\rpc\source\thirdparty\hook\minhook\hook.c" ^
-/Tp"..\rpc\source\threads\attach.cpp" ^
-/Tp"..\rpc\source\threads\detach.cpp" 
+/Tp"..\source\rpc\config.cpp" ^
+/Tp"..\source\rpc\main.cpp" ^
+/Tp"..\source\rpc\update.cpp" ^
+/Tp"..\source\rpc\discord\discord.cpp" ^
+/Tp"..\source\rpc\discord\presence.cpp" ^
+/Tp"..\source\rpc\parser\parser.cpp" ^
+/Tp"..\source\rpc\parser\rules.cpp" ^
+/Tp"..\source\rpc\thirdparty\t7api\cg.cpp" ^
+/Tp"..\source\rpc\thirdparty\t7api\com.cpp" ^
+/Tp"..\source\rpc\thirdparty\t7api\ddl.cpp" ^
+/Tp"..\source\rpc\thirdparty\t7api\demo.cpp" ^
+/Tp"..\source\rpc\thirdparty\t7api\g.cpp" ^
+/Tp"..\source\rpc\thirdparty\t7api\livestats.cpp" ^
+/Tp"..\source\rpc\thirdparty\t7api\livestorage.cpp" ^
+/Tp"..\source\rpc\thirdparty\t7api\lobbysession.cpp" ^
+/Tp"..\source\rpc\thirdparty\hook\kiero.cpp" ^
+/Tp"..\source\rpc\thirdparty\hook\hardware-breakpoint.cpp" ^
+/Tc"..\source\rpc\thirdparty\hook\minhook\hde\hde32.c" ^
+/Tc"..\source\rpc\thirdparty\hook\minhook\hde\hde64.c" ^
+/Tc"..\source\rpc\thirdparty\hook\minhook\trampoline.c" ^
+/Tc"..\source\rpc\thirdparty\hook\minhook\buffer.c" ^
+/Tc"..\source\rpc\thirdparty\hook\minhook\hook.c" ^
+/Tp"..\source\rpc\threads\attach.cpp" ^
+/Tp"..\source\rpc\threads\detach.cpp" 
 
 echo.
 echo [BUILD]: LINKING
