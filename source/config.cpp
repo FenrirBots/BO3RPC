@@ -4,7 +4,23 @@
 #include <windows.h>
 #include "config.h"
 
-const char* DEFAULT_CONFIGURATION = "{ \
+const char* DEFAULT_CONFIGURATION = "//======Parser Rules======// \
+\n//  - ${ping} \
+\n//  - ${place} \
+\n//  - ${score} \
+\n//  - ${kills} \
+\n//  - ${assists} \
+\n//  - ${deaths} \
+\n//  - ${downs} \
+\n//  - ${revives} \
+\n//  - ${headshots} \
+\n//  - ${mapname} \
+\n//  - ${fastfile} \
+\n//  - ${round} \
+\n//  - ${username} \
+\n//  - ${sessionmode} \
+\n \
+\n{ \
 \n    \"remove-invalid-rules\": true, \
 \n    \"presence\": { \
 \n        \"zombies\": { \
