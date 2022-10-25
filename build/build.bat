@@ -51,6 +51,7 @@ call cl.exe /nologo /EHsc /W4 /O2 /MD /std:c++17 /D_USRDLL /D_WINDLL /D_NDEBUG /
 /Tp"..\source\rpc\thirdparty\t7api\livestats.cpp" ^
 /Tp"..\source\rpc\thirdparty\t7api\livestorage.cpp" ^
 /Tp"..\source\rpc\thirdparty\t7api\lobbysession.cpp" ^
+/Tp"..\source\rpc\thirdparty\t7api\settings.cpp" ^
 /Tp"..\source\rpc\thirdparty\hook\kiero.cpp" ^
 /Tp"..\source\rpc\thirdparty\hook\hardware-breakpoint.cpp" ^
 /Tc"..\source\rpc\thirdparty\hook\minhook\hde\hde32.c" ^
