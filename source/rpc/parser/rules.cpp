@@ -90,19 +90,12 @@ std::string parser::callbacks::headshots()
 // Fix an issue where the mapname on anything other than zombies can be empty or wrong
 std::string parser::callbacks::mapname()
 {
-    if(reinterpret_cast<const char*>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF7892F1840 - 0x7FF771910000)) == std::string(""))
+    if(reinterpret_cast<const char*>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF78AD517A2 - 0x7FF771910000)) == std::string(""))
     {
         return "usermaps";
     }
 
-    return reinterpret_cast<const char*>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF7892F1840 - 0x7FF771910000));
-
-//    if(reinterpret_cast<const char*>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF78AD517A2 - 0x7FF771910000)) == std::string(""))
-//    {
-//        return "usermaps";
-//    }
-//
-//    return reinterpret_cast<const char*>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF78AD517A2 - 0x7FF771910000));
+    return reinterpret_cast<const char*>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF78AD517A2 - 0x7FF771910000));
 }
 
 std::string parser::callbacks::fastfile()

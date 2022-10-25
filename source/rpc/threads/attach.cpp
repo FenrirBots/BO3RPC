@@ -12,6 +12,7 @@ DWORD WINAPI threads::attach(LPVOID /* lpvReserved */)
 {
     config::load();
 
+    // Move to Config::Load();
     try { 
         parser::removeinvalid = config::get()["remove-invalid-rules"].get<bool>();
     } catch(...) {}
