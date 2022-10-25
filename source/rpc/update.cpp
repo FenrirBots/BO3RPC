@@ -8,6 +8,7 @@
 #include "update.h"
 #include "parser/parser.h"
 
+// TODO: Add the difficulty parser rule.
 // TODO: Add gamemode checks to parser rules that crash when used on the wrong game.
 // TODO: Add parser rules for Freerun and Theater mode.
 // TODO: Add rules for Primary, Secondary and Mule Kick guns.
@@ -61,7 +62,7 @@ HRESULT WINAPI update(IDXGISwapChain* swapchain, UINT interval, UINT flags)
             ConfigKeyDown = false;
         }
     }
-    
+
     std::chrono::steady_clock steady_clock;
     if(getdelta(steady_clock.now()) >= ((t7api::com::isingame() == true) ? std::chrono::seconds(30) : std::chrono::seconds(5)))
     {

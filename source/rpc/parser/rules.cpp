@@ -87,17 +87,22 @@ std::string parser::callbacks::headshots()
 #pragma endregion
 
 
-// Fix an issue where the mapname on anything other than zombies can be empty
+// Fix an issue where the mapname on anything other than zombies can be empty or wrong
 std::string parser::callbacks::mapname()
 {
-    return t7api::cg::getmatchscoreboardmapname(0);
-    
-    //if(reinterpret_cast<const char*>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF78AD517A2 - 0x7FF771910000)) == std::string(""))
-    //{
-    //    return "usermaps";
-    //}
+    if(reinterpret_cast<const char*>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF7892F1840 - 0x7FF771910000)) == std::string(""))
+    {
+        return "usermaps";
+    }
 
-    //return reinterpret_cast<const char*>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF78AD517A2 - 0x7FF771910000));
+    return reinterpret_cast<const char*>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF7892F1840 - 0x7FF771910000));
+
+//    if(reinterpret_cast<const char*>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF78AD517A2 - 0x7FF771910000)) == std::string(""))
+//    {
+//        return "usermaps";
+//    }
+//
+//    return reinterpret_cast<const char*>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF78AD517A2 - 0x7FF771910000));
 }
 
 std::string parser::callbacks::fastfile()
@@ -164,21 +169,15 @@ enum DIFFICULTIES : __int32
 };
 */
 
-const char* m_CampaignDifficulties[5] = {"Easy", "Medium", "Hard", "Veteran", "Realistic"};
-const char* m_MultiplayerDifficulties[5] = {"Easy", "Medium", "Hard", "Veteran", "Realistic"};
+const char* m_Difficulties[5] = {"Recruit", "Regular", "Hardened", "Veteran", "Realistic"};
 
 std::string parser::callbacks::difficulty()
 {
     unsigned long long controllerindex = t7api::com::localclient::getcontrollerindex(0);
-    unsigned int difficulty = t7api::settings::getuint("g_skilltype", controllerindex);
+    unsigned long long difficulty = t7api::settings::getuint("g_skilltype", controllerindex);
 
-    switch(t7api::com::sessionmode::getmode())
-    {
-    case MODE_CAMPAIGN:
-        return m_CampaignDifficulties[difficulty];
-    case MODE_MULTIPLAYER:
-        return m_MultiplayerDifficulties[difficulty];
-    }
+    if(difficulty < 5)
+        return m_Difficulties[difficulty];
  
     return "UNKNOWN";
 }
