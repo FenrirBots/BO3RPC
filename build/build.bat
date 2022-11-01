@@ -9,26 +9,51 @@ set BuildTools64=
 if ["%1"]==[""] (
 	echo [BUILD]: No build tools provided, searching known directories
 
-	:: I hate this...
+	:: I hate this...	
 	if exist "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\" (
 		set BuildTools32="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars32.bat"
 		set BuildTools64="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat"
 		echo [BUILD]: Visual Studio Build Tools 2022 found
 	) else (
-		if exist "C:\Program Files\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\" (
-			set BuildTools32="C:\Program Files\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars32.bat"
-			set BuildTools64="C:\Program Files\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
-			echo [BUILD]: Visual Studio Build Tools 2019 found
+		if exist "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\" (
+			set BuildTools32="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars32.bat"
+			set BuildTools64="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat"
+			echo [BUILD]: Visual Studio Build Tools 2022 found
 		) else (
-			if exist "C:\Program Files\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\" (
-				set BuildTools32="C:\Program Files\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars32.bat"
-				set BuildTools64="C:\Program Files\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
-				echo [BUILD]: Visual Studio Build Tools 2017 found
+			if exist "C:\Program Files\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\" (
+				set BuildTools32="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars32.bat"
+				set BuildTools64="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat"
+				echo [BUILD]: Visual Studio Build Tools 2019 found
 			) else (
-				echo [BUILD]: No build tools found, please provide them as an argument and try again...	
-				goto :pausethenend
+				if exist "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\" (
+					set BuildTools32="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars32.bat"
+					set BuildTools64="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat"
+					echo [BUILD]: Visual Studio Build Tools 2019 found
+				) else (				
+					if exist "C:\Program Files\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\" (
+						set BuildTools32="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars32.bat"
+						set BuildTools64="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat"
+						echo [BUILD]: Visual Studio Build Tools 2017 found
+					) else (
+						if exist "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\" (
+							set BuildTools32="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars32.bat"
+							set BuildTools64="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat"
+							echo [BUILD]: Visual Studio Build Tools 2017 found
+						) else (
+							echo [BUILD]: No build tools found, please provide them as an argument and try again...	
+							goto :pausethenend
+						)
+					)
+				)
 			)
 		)
+	)
+) else (
+	set BuildTools=%1
+	set BuildTools=%BuildTools:"=%
+	if exists %BuildTools% (
+		BuildTools64="%BuildTools%\vcvars64.bat"
+		BuildTools32="%BuildTools%\vcvars32.bat"
 	)
 )
 
