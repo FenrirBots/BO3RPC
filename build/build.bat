@@ -49,18 +49,22 @@ if ["%1"]==[""] (
 		)
 	)
 ) else (
+	echo [BUILD]: Build tools provided, checking for files
 	set BuildTools=%1
 	set BuildTools=%BuildTools:"=%
-	if exists %BuildTools%\ (
+	if exist %BuildTools%\ (
 		BuildTools64="%BuildTools%\vcvars64.bat"
 		BuildTools32="%BuildTools%\vcvars32.bat"
+	) else (
+		echo [BUILD]: Invalid build tools path provided, please check the path and try again...
+		goto :pausethenend
 	)
 )
 
 if not exist "bin\" mkdir bin
 if not exist "bin\rpc\" mkdir bin\rpc
 if not exist "bin\rpc\intermediate\" mkdir bin\rpc\intermediate
-echo %BuildTools64%
+
 call %BuildTools64%
 
 echo [BUILD]: COMPILING
