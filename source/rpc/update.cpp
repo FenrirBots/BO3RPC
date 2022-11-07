@@ -8,15 +8,15 @@
 #include "update.h"
 #include "parser/parser.h"
 
-// TODO: Add the difficulty parser rule.
-// TODO: Add gamemode checks to parser rules that crash when used on the wrong game.
-// TODO: Add parser rules for Freerun and Theater mode.
-// TODO: Add rules for Primary, Secondary and Mule Kick guns.
-// TODO: Add a rule for the current easteregg step on zombies.
-// TODO: Add a rule for the already done easteregg's in zombies.
-// TODO: Find a way to make the strcmp while ingame 1 set of strcmp and not 2-3 seperate sets.
-// TODO: Add descriptions to parser rules.
-// TODO: Stop using so many fucking namespaces.
+// TODO: Fix the Difficulty Parser rule.
+// TODO: Fix a potential com_error that happens when losing internet connection while in a mp game.
+// TODO: Add parser rules for freerun and Theater mode.
+// TODO: Add gamemode checks to rules that can cause issues and crashes when used incorrectly.
+// TODO: Add rules for the Primary, Secondary and Mule Kick Weapons.
+// TODO: Add parser rules for easter-egg bits.
+// TODO: Update the Multiplayer configuration.
+// TODO: Add descriptions to the parser rules.
+// TODO: Investigate a potential crash when detaching from the process.
 
 unsigned long long g_entities = 0;
 HRESULT(__stdcall* present)(IDXGISwapChain*, UINT, UINT);
@@ -101,12 +101,12 @@ HRESULT WINAPI update(IDXGISwapChain* swapchain, UINT interval, UINT flags)
                    fastfile != "zm_temple" &&
                    fastfile != "zm_moon" &&
                    fastfile != "zm_tomb")
-                fastfile = "usermaps";
+                fastfile = "logo-black";
             }
 
             presence.largeImageKey = fastfile.c_str();
             presence.largeImageText = parser::parse("${mapname}", 128).c_str();
-            presence.smallImageKey = "logo-black";
+            presence.smallImageKey = "null";
 
             presence.state = "";
             presence.details = "";
