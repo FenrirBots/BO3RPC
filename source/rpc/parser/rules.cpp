@@ -86,16 +86,43 @@ std::string parser::callbacks::headshots()
 }
 #pragma endregion
 
+// This is a custom function, im just too lazy to name stuff.
+std::string GetCurrentMapName()
+{
+    const char* v1;
+    int v2;
+    unsigned long long v3;
+    unsigned long long v4;
+    const char* v5;
+    const char* v6;
 
-// Fix an issue where the mapname on anything other than zombies can be empty or wrong
+    v1 = t7api::dvar::getstring(*(unsigned long long*)((unsigned long long)GetModuleHandle(0) + (0x7FF7892F1AC0 - 0x7FF771910000)));
+    v2 = t7api::com::gameinfo::getmapidforname(v1);
+    
+    if(v2 != -1)
+    {
+        v3 = ((unsigned long long)GetModuleHandle(0) + (0x7FF7881E3800 - 0x7FF771910000));
+        v4 = *(unsigned long long*)(v3 + 16 * v2);
+        
+        if(v4 != 0)
+        {
+            v5 = *(const char**)(v4 + 16);
+            v6 = t7api::ui::safetranslatestring(v5);
+            
+            return v6;
+        }
+    }
+    
+    return "";
+}
+
 std::string parser::callbacks::mapname()
 {
-    if(reinterpret_cast<const char*>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF78AD517A2 - 0x7FF771910000)) == std::string(""))
-    {
-        return "usermaps";
-    }
-
-    return reinterpret_cast<const char*>(reinterpret_cast<unsigned long long>(GetModuleHandleA(0)) + (0x7FF78AD517A2 - 0x7FF771910000));
+    // Notes:
+    //    All core zombies maps are prefixed with DLCx_ except for Shadows of Evil which is prefixed with ZMUI_
+    //    This was very confusing to figure out
+    
+    return GetCurrentMapName();
 }
 
 std::string parser::callbacks::fastfile()
@@ -151,19 +178,9 @@ std::string parser::callbacks::sessionmode()
     return "Invalid Mode";
 }
 
-/*
-enum DIFFICULTIES : __int32
-{
-  DIFFICULTY_EASY = 0x0,
-  DIFFICULTY_MEDIUM = 0x1,
-  DIFFICULTY_HARD = 0x2,
-  DIFFICULTY_VETERAN = 0x3,
-  DIFFICULTY_FU = 0x4,
-};
-*/
-
 const char* m_Difficulties[5] = {"Recruit", "Regular", "Hardened", "Veteran", "Realistic"};
 
+// Fix the difficulty defaulting to recruit
 std::string parser::callbacks::difficulty()
 {
     unsigned long long controllerindex = t7api::com::localclient::getcontrollerindex(0);
