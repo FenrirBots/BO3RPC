@@ -9,13 +9,13 @@
 #include "parser/parser.h"
 
 // TODO: Fix the Difficulty Parser rule.
-// TODO: Fix a potential com_error that happens when losing internet connection while in a mp game.
 // TODO: Add parser rules for freerun and Theater mode.
 // TODO: Add gamemode checks to rules that can cause issues and crashes when used incorrectly.
 // TODO: Add rules for the Primary, Secondary and Mule Kick Weapons.
 // TODO: Add parser rules for easter-egg bits.
 // TODO: Update the Multiplayer configuration.
 // TODO: Add descriptions to the parser rules.
+// TODO: Investigate a potential error that happens when losing internet connection while in a mp game.
 // TODO: Investigate a potential crash when detaching from the process.
 
 unsigned long long g_entities = 0;
