@@ -35,6 +35,11 @@ namespace t7api
 	    extern bool (__cdecl* isingame)();
     	extern bool (__fastcall* ismode)(eModes);
 
+        namespace controllerindexes
+        {
+            extern long long (__cdecl* getprimary)();
+        }
+        
         namespace gameinfo
         {
             extern int (__fastcall* getmapidforname)(const char*);
@@ -110,7 +115,7 @@ namespace t7api
 
     namespace settings
     {
-        extern unsigned long long (__fastcall* getuint)(const char*, unsigned long long);
+        extern int (__fastcall* getuint)(const char*, int);
     }
     
     namespace ui

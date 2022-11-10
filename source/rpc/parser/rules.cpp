@@ -183,11 +183,26 @@ const char* m_Difficulties[5] = {"Recruit", "Regular", "Hardened", "Veteran", "R
 // Fix the difficulty defaulting to recruit
 std::string parser::callbacks::difficulty()
 {
-    unsigned long long controllerindex = t7api::com::localclient::getcontrollerindex(0);
-    unsigned long long difficulty = t7api::settings::getuint("g_skilltype", controllerindex);
+    /*
+    unsigned long long primary;
+    unsigned long long difficulty;
+    
+    primary = t7api::com::controllerindexes::getprimary();
+    difficulty = t7api::settings::getuint("g_skilltype", primary);
 
     if(difficulty < 5)
         return m_Difficulties[difficulty];
  
     return "UNKNOWN";
+    */
+    
+    int difficulty = 0;
+    difficulty = t7api::settings::getuint("g_gameskill", 0);
+    
+    if(difficulty < 5)
+    {
+        return m_Difficulties[difficulty];
+    }
+    
+    return "Invalid Difficulty";
 }
