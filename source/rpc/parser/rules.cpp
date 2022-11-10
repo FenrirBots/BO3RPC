@@ -178,24 +178,13 @@ std::string parser::callbacks::sessionmode()
     return "Invalid Mode";
 }
 
-const char* m_Difficulties[5] = {"Recruit", "Regular", "Hardened", "Veteran", "Realistic"};
+//const char* m_Difficulties[5] = {"Recruit", "Regular", "Hardened", "Veteran", "Realistic"};
 
-// Fix the difficulty defaulting to recruit
+/*
+// Developer Note: This is commented out due to crashing when loading into campaign
+///////////////////////////////////////////////////////////////////////////////////
 std::string parser::callbacks::difficulty()
 {
-    /*
-    unsigned long long primary;
-    unsigned long long difficulty;
-    
-    primary = t7api::com::controllerindexes::getprimary();
-    difficulty = t7api::settings::getuint("g_skilltype", primary);
-
-    if(difficulty < 5)
-        return m_Difficulties[difficulty];
- 
-    return "UNKNOWN";
-    */
-    
     int difficulty = 0;
     difficulty = t7api::settings::getuint("g_gameskill", 0);
     
@@ -206,3 +195,4 @@ std::string parser::callbacks::difficulty()
     
     return "Invalid Difficulty";
 }
+*/

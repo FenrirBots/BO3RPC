@@ -20,7 +20,8 @@ namespace parser
         std::string fastfile();
         std::string round();
         std::string sessionmode();
-        std::string difficulty();
+        
+        //std::string difficulty();
 
         // Debug Rules
         std::string gentities();
