@@ -8,7 +8,10 @@
 #include "update.h"
 #include "parser/parser.h"
 
-// TODO: Fix the Difficulty Parser rule.
+// TODO: Add LargeImages for Multiplayer and Campaign.
+// TODO: Create a tool that handles the creation of the remote thread allowing for ease of use without any third party tools.
+// TODO: Verify the Difficulty Parser Rule works on campaign.
+// TODO: Fix the Difficulty Parser Rule on Multiplayer.
 // TODO: Add parser rules for freerun and Theater mode.
 // TODO: Add gamemode checks to rules that can cause issues and crashes when used incorrectly.
 // TODO: Add rules for the Primary, Secondary and Mule Kick Weapons.
@@ -16,8 +19,7 @@
 // TODO: Update the Multiplayer configuration.
 // TODO: Add descriptions to the parser rules.
 // TODO: Investigate a potential error that happens when losing internet connection while in a mp game.
-// TODO: Investigate a potential crash when detaching from the process.
-
+ 
 unsigned long long g_entities = 0;
 HRESULT(__stdcall* present)(IDXGISwapChain*, UINT, UINT);
 
@@ -29,8 +31,9 @@ std::chrono::seconds getdelta(std::chrono::steady_clock::time_point now)
 
 HRESULT WINAPI update(IDXGISwapChain* swapchain, UINT interval, UINT flags)
 {
-    // This wont get a keydown check as if it fails it 
-    // will most likely crash the game.
+    /*
+    // Developer Note: Commented out as it crashes the game for unknown reasons.
+    //////////////////////////////////////////////////////////////////////////
     if(GetAsyncKeyState(VK_F9) & 0x8000)
     {
         t7api::cg::boldgamemessagecenter(0, "Detaching from process...");
@@ -43,6 +46,7 @@ HRESULT WINAPI update(IDXGISwapChain* swapchain, UINT interval, UINT flags)
         CreateThread(0, 0, threads::detach, 0, 0, 0);
         return present(swapchain, interval, flags);
     }
+    */
 
     static bool ConfigKeyDown = false;
     if(GetAsyncKeyState(VK_F5) & 0x8000)
