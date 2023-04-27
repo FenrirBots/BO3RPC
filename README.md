@@ -1,3 +1,5 @@
+# THIS PROJECT IS OUT OF DATE AND REQUIRES AN UPDATE
+
 # T7-RPC
 A Discord Rich Presence for Call of Duty: Black Ops III
 
