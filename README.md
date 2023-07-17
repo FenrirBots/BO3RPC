@@ -1,5 +1,7 @@
 # THIS PROJECT IS OUT OF DATE AND REQUIRES AN UPDATE
 
+# 2023/7/27: Project is being updated, please wait
+
 # NOTICE
 This project will have a rewrite in the upcoming months to both use the latest c++ feature and to help with performance
 (Also its a mess to read)
