@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [{
+        "name": "C/C++: Launch",
+        "type": "cppvsdbg",
+        "request": "launch",
+        "symbolOptions": {
+            "searchPaths": [],
+            "searchMicrosoftSymbolServer": false,
+        },
+        "program": "",
+        "cwd": "",
+    }]
+}

@@ -1,0 +1,126 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "[ ANY ]: Copy Files",
+            "command": "Copy-Item",
+            "args": [
+                "-path",
+                "${workspaceFolder}\\library\\bin\\out\\presence.dll",
+                "-destination",
+                "${workspaceFolder}\\launcher\\bin\\out\\presence.dll",
+                "-force",
+                ";",
+                "Copy-Item",
+                "-path",
+                "${workspaceFolder}\\library\\bin\\out\\minhook.dll",
+                "-destination",
+                "${workspaceFolder}\\launcher\\bin\\out\\minhook.dll",
+                "-force"
+            ],
+            "hide": true
+        }, 
+
+        {
+            "type": "shell",
+            "label": "[ DBG ]: Build Library",
+            "command": "cl.exe",
+            "args": [
+                "/nologo",
+                "/Zi",
+                "/Fd:${workspaceFolder}\\library\\bin\\out\\presence.pdb",
+                "/W4",
+                "/WX",
+                "/O2",
+                "/MD",
+                "/D _USRDLL",
+                "/D _WINDLL",
+                "/D DEBUG",
+                "/Fo:${workspaceFolder}\\library\\bin\\out-int\\\\",
+                "/TC",
+                "${workspaceFolder}\\library\\src\\entrypoint.c",
+                "${workspaceFolder}\\library\\src\\stub.c",
+                "/link",
+                "/machine:x64",
+                "/dll",
+                "/debug:full",
+                "/subsystem:windows",
+                "/out:${workspaceFolder}\\library\\bin\\out\\presence.dll",
+                "user32.lib"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "[ DBG ]: Build Library (MinHook)",
+            "command": "cl.exe",
+            "args": [
+                "/nologo",
+                "/Zi",
+                "/Fd:${workspaceFolder}\\library\\bin\\out\\presence.pdb",
+                "/W4",
+                "/WX",
+                "/O2",
+                "/MD",
+                "/D _USRDLL",
+                "/D _WINDLL",
+                "/D DEBUG",
+                "/Fo:${workspaceFolder}\\library\\bin\\out-int\\minhook\\\\",
+                "/I",
+                "${workspaceFolder}\\library\\src",
+                "/TC",
+                "${workspaceFolder}\\library\\src\\minhook\\trampoline.c",
+                "${workspaceFolder}\\library\\src\\minhook\\hook.c",
+                "${workspaceFolder}\\library\\src\\minhook\\buffer.c",
+                "${workspaceFolder}\\library\\src\\minhook\\hde\\hde32.c",
+                "${workspaceFolder}\\library\\src\\minhook\\hde\\hde64.c",
+                "/link",
+                "/machine:x64",
+                "/dll",
+                "/debug:full",
+                "/subsystem:windows",
+                "/out:${workspaceFolder}\\library\\bin\\out\\minhook.dll"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        
+        {
+            "type": "shell",
+            "label": "[ DBG ]: Build Launcher",
+            "command": "cl.exe",
+            "args": [
+                "/nologo",
+                "/Zi",
+                "/Fd:${workspaceFolder}\\launcher\\bin\\out\\launcher.pdb",
+                "/W4",
+                "/WX",
+                "/D DEBUG",
+                "/Fo:${workspaceFolder}\\launcher\\bin\\out-int\\\\",
+                "/TC",
+                "${workspaceFolder}\\launcher\\src\\entrypoint.c",
+                "/link",
+                "/machine:x64",
+                "/debug:full",
+                "/subsystem:console",
+                "/out:${workspaceFolder}\\launcher\\bin\\out\\launcher.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "[ DBG ]: Build Library",
+                "[ DBG ]: Build Library (MinHook)",
+                "[ ANY ]: Copy Files"
+            ]
+        }
+    ]
+}
